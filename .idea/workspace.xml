@@ -7,8 +7,8 @@
     </list>
     <ignored path="TP-AOP.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/test.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380940178404" ignored="false" />
-    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380940283163" ignored="false" />
+    <file path="/test.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380942355994" ignored="false" />
+    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380941092759" ignored="false" />
     <file path="C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/rspec-core-2.14.5/lib/rspec/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897958" ignored="false" />
     <file path="/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897959" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,7 +33,7 @@
       <file leaf-file-name="test.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AOP-Framework/test.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="9" selection-start="2071" selection-end="2071" vertical-scroll-proportion="0.8312655">
+            <state line="65" column="35" selection-start="1715" selection-end="1715" vertical-scroll-proportion="0.74689823">
               <folding />
             </state>
           </provider>
@@ -285,7 +285,11 @@
       <created>1380940285835</created>
       <updated>1380940285835</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Formateo de codigo">
+      <created>1380941099060</created>
+      <updated>1380941099060</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -301,7 +305,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27302632" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27302632" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -336,7 +340,7 @@
     <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
-    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="false" />
     <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
     <option name="SHORT_DIFF_HORIZONTALLY" value="true" />
     <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
@@ -354,7 +358,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agregado JP de metodos(regexp, array) + accessosrs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Formateo de codigo" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -372,6 +376,7 @@
     <MESSAGE value="JP de clases, selecciona las clases segun uno o varios  regexp enviados por parametro" />
     <MESSAGE value="Agregado de definir clases por array, o por jeraquia (no incluye Object y BasicObject)" />
     <MESSAGE value="Agregado JP de metodos(regexp, array) + accessosrs" />
+    <MESSAGE value="Formateo de codigo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -393,7 +398,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AOP-Framework/test.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="9" selection-start="2071" selection-end="2071" vertical-scroll-proportion="0.8312655">
+        <state line="65" column="35" selection-start="1715" selection-end="1715" vertical-scroll-proportion="0.74689823">
           <folding />
         </state>
       </provider>

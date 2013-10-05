@@ -39,23 +39,7 @@ class Class
   end
 end
 
-class Foo
 
-end
-class Foo2
-
-end
-
-class Bar
-
-end
-
-class Hola
-
-end
-
-class Chau < Hola
-end
 
 
 module AOPFramework
@@ -64,6 +48,7 @@ module AOPFramework
       clases=[]
       metodos=[]
       metodos_tot=[]
+      metodos_obj=[]
       args.each do |decl,val|
          p clases << Object.subclasses.select{|klass| klass.to_s =~ (val)} if decl.to_s.start_with?('clase') && val.is_a?(Regexp)
          p clases << val if decl.to_s.start_with?('clase') && val.is_a?(Array)
@@ -75,8 +60,10 @@ module AOPFramework
       end
       clases.each do |klass|
         metodos_tot << klass.public_methods(false)
+        metodos_obj << klass.public_methods(false).map{|met| klass.method(met)}
       end
       p metodos_tot = metodos_tot.flatten.uniq
+        p metodos_obj.flatten!.uniq
       args.each do |decl,val|
         p metodos << metodos_tot.select{|metodo| metodo.to_s =~ val } if decl.to_s.start_with?('metodo') && val.is_a?(Regexp)
         p metodos << val if decl.to_s.start_with?('metodo') && val.is_a?(Array)
@@ -93,6 +80,24 @@ module AOPFramework
 
 end
 
+
+
+
+class Foo
+end
+
+class Foo2
+end
+
+class Bar
+end
+
+class Hola
+end
+
+class Chau < Hola
+end
+
 class Aspect
   attr_accessor :point_cuts
   def initialize
@@ -106,12 +111,3 @@ aspecto= Aspect.new
 aspecto.point_cuts=(AOPFramework::joint_point(clase1:/Foo/, metodo1:/inher/,clase2:/Bar/,clase3:/Bar/,clase4:[Aspect,Foo],hierarchy:Chau,accessors:true))
 
 p aspecto.point_cuts
-
-
-
-
-
-
-#@@subclasses.each do |klass|
-# p klass.public_methods(false)
-#end
