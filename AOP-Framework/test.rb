@@ -25,15 +25,25 @@ end
 module AOPFramework
 
   def self.joint_point (args)
-
+      clases=[]
     args.each do |decl,val|
       p Object.subclasses
-       p Object.subclasses.select{|klass| klass.to_s =~ (val)} if decl.to_s.start_with?("clase")
+       p clases << Object.subclasses.select{|klass| klass.to_s =~ (val)} if decl.to_s.start_with?('clase')
     end
+    clases.flatten!.uniq!
+      p "clases"
+    p clases
   end
 
 end
 
+class Aspect
+  attr_reader :point_cuts
+  def initialize
+    @point_cuts=[]
+  end
+
+end
 
 AOPFramework::joint_point(clase:/Foo/, metodo:/[aeiou]/,clase2:/[123]/)
 
