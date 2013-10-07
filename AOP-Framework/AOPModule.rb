@@ -43,6 +43,7 @@ end
 
 
 class AOPFramework
+  attr_accessor :metodos,:clases
   def initialize
     @clases=[]
     @metodos_obj=[]
@@ -94,6 +95,21 @@ class AOPFramework
         @metodos_obj << klass.attr_writers.map{|met| klass.new.method(met)}
     }
     point_cut_core(bloque_clase,bloque_metodo,bloque_iterator)
+  end
+
+  def point_cut_hierarchy(clase)
+    bloque_clase=lambda{|klass| clase.ancestors.include?(klass) }
+    point_cut_bloque_clase(bloque_clase)
+  end
+
+  def point_cut_array_clase(array_clase)
+    bloque_clase=lambda{|klass| array_clase.include?(klass) }
+    point_cut_bloque_clase(bloque_clase)
+  end
+
+  def point_cut_array_metodos(array_metodos)
+    bloque_metodo=lambda{|metodo| array_metodos.include?(metodo.name) }
+    point_cut_bloque_metodo(bloque_metodo)
   end
 
   private

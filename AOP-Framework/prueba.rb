@@ -13,7 +13,7 @@ class Bar
 end
 
 class Hola
-
+  attr_accessor :un_accessor2, :otro_accessor2
 end
 
 class Chau < Hola
@@ -31,4 +31,7 @@ p aop.point_cut_regexp_clase(/[o]/)
 p aop.point_cut_regexp_metodos(/[o]/)
 p aop.point_cut_accessors( lambda {|clase| true} )
 p aop.point_cut_method_start_with("point_cut_reg")
+p aop.point_cut_hierarchy(Chau)
+p aop.point_cut_array_clase([Foo,Bar,Chau])
+p aop.point_cut_array_metodos([:point_cut,:otro_accessor])
 
