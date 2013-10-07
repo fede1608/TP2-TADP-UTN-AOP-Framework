@@ -10,6 +10,12 @@ class Foo2
 end
 
 class Bar
+  def methodd(par1,par2)
+
+  end
+  def methodd1(par1)
+
+  end
 end
 
 class Hola
@@ -36,4 +42,6 @@ p aop.point_cut_array_clase([Foo,Bar,Chau])
 p aop.point_cut_array_metodos([:point_cut,:otro_accessor])
 p aop.point_cut_array_metodos(["point_cut","otro_accessor"])
 p aop.point_cut_metodos_arity(2)
+p aop.point_cut_OR(aop.point_cut_hierarchy(Chau),aop.point_cut_array_metodos(["point_cut","otro_accessor"]))
+p aop.point_cut_AND(aop.point_cut_array_clase([Bar]),aop.point_cut_metodos_arity(1))
 

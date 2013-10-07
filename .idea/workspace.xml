@@ -9,11 +9,11 @@
     <ignored path="TP-AOP.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/test.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380942355994" ignored="false" />
-    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381116214446" ignored="false" />
+    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381117121030" ignored="false" />
     <file path="C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/rspec-core-2.14.5/lib/rspec/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897958" ignored="false" />
     <file path="/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897959" ignored="false" />
-    <file path="/AOPModule.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381117042094" ignored="false" />
-    <file path="/prueba.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381117061046" ignored="false" />
+    <file path="/AOPModule.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381187875426" ignored="false" />
+    <file path="/prueba.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381188119365" ignored="false" />
     <file path="/Ruby Console" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381105897709" ignored="false" />
     <file path="/temp.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381113565620" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,7 +47,7 @@
       <file leaf-file-name="AOPModule.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPModule.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="114" column="6" selection-start="2975" selection-end="2999" vertical-scroll-proportion="0.0">
+            <state line="135" column="2" selection-start="3689" selection-end="3689" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -56,7 +56,7 @@
       <file leaf-file-name="prueba.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AOP-Framework/prueba.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="31" selection-start="883" selection-end="883" vertical-scroll-proportion="0.7146283">
+            <state line="45" column="82" selection-start="1136" selection-end="1136" vertical-scroll-proportion="0.914787">
               <folding />
             </state>
           </provider>
@@ -93,10 +93,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="x" value="1" />
+    <option name="y" value="1" />
+    <option name="width" value="1364" />
+    <option name="height" value="726" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -396,11 +396,15 @@
       <created>1381116216573</created>
       <updated>1381116216573</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Agregado de PC por aridad del metodo">
+      <created>1381117123150</created>
+      <updated>1381117123150</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <frame x="1" y="1" width="1364" height="726" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -409,11 +413,11 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25454545" sideWeight="0.72861844" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2580645" sideWeight="0.720339" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2713816" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27966103" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -465,7 +469,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed en PC de metodos enumerados, ahora permite ingresar tanto simbolos como strings" />
+    <option name="LAST_COMMIT_MESSAGE" value="Agregado de PC por aridad del metodo" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -490,9 +494,12 @@
     <MESSAGE value="Agregado de Point Cuts(method_start_with, solo bloque de clases,solo bloque de metodos), Se derivo logica comun a otro metodo privado para no repetir." />
     <MESSAGE value="Agegrado de  PC hierarchy y arrays" />
     <MESSAGE value="Fixed en PC de metodos enumerados, ahora permite ingresar tanto simbolos como strings" />
+    <MESSAGE value="Agregado de PC por aridad del metodo" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/AOP-Framework/test.rb">
@@ -539,14 +546,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPModule.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="114" column="6" selection-start="2975" selection-end="2999" vertical-scroll-proportion="0.0">
+        <state line="135" column="2" selection-start="3689" selection-end="3689" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AOP-Framework/prueba.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="31" selection-start="883" selection-end="883" vertical-scroll-proportion="0.7146283">
+        <state line="45" column="82" selection-start="1136" selection-end="1136" vertical-scroll-proportion="0.914787">
           <folding />
         </state>
       </provider>
