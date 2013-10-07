@@ -45,15 +45,25 @@ end
 class AOPFramework
   def initialize
     @clases=[]
+    @metodos_obj=[]
     @metodos=[]
   end
 
   def point_cut(bloque_clase,bloque_metodo)
-
     bloque_iterator = lambda do |klass|
       @metodos_obj << klass.instance_methods(false).map{|met| klass.new.method(met)}
     end
     point_cut_core(bloque_clase,bloque_metodo,bloque_iterator)
+  end
+
+  def point_cut_bloque_clase(bloque_clase)
+   bloque_metodo= lambda {|a| true}
+   point_cut(bloque_clase,bloque_metodo)
+  end
+
+  def point_cut_bloque_metodo(bloque_metodo)
+    bloque_clase= lambda {|a| true}
+    point_cut(bloque_clase,bloque_metodo)
   end
 
   def point_cut_regexp(reg_clases,reg_metodos)
@@ -72,6 +82,11 @@ class AOPFramework
     point_cut_regexp(reg_clases,reg_metodos)
   end
 
+  def point_cut_method_start_with(string_metodo)
+    bloque_metodo=lambda{|metodo| metodo.name.to_s.start_with?(string_metodo)}
+    point_cut_bloque_metodo(bloque_metodo)
+  end
+
   def point_cut_accessors(bloque_clase)
     bloque_metodo = lambda{|a| true}
     bloque_iterator = lambda { |klass|
@@ -84,12 +99,11 @@ class AOPFramework
   private
 
   def point_cut_core(bloque_clase,bloque_metodo,bloque_iterador)
-    @metodos_obj=[]
-    @metodos=[]
+    initialize
     @clases=Object.subclasses.select(&bloque_clase)
     @clases.each(&bloque_iterador)
     @metodos_obj.flatten!
-    @metodos= @metodos_obj.select(&bloque_metodo)
+    @metodos=@metodos_obj.select(&bloque_metodo)
     Hash[:clases => @clases, :metodos => @metodos]
   end
 

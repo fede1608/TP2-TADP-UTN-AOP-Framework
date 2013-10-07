@@ -24,8 +24,11 @@ aop=AOPFramework.new
 clase_proc= lambda {|clase| true}
 metodo_proc=lambda {|metodo| true}
 p aop.point_cut(clase_proc,metodo_proc)
+p aop.point_cut_bloque_clase(clase_proc)
+p aop.point_cut_bloque_metodo(metodo_proc)
 p aop.point_cut_regexp(/[o]/,/clase/)
 p aop.point_cut_regexp_clase(/[o]/)
 p aop.point_cut_regexp_metodos(/[o]/)
 p aop.point_cut_accessors( lambda {|clase| true} )
+p aop.point_cut_method_start_with("point_cut_reg")
 
