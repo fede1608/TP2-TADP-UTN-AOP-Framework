@@ -9,11 +9,11 @@
     <ignored path="TP-AOP.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/test.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380942355994" ignored="false" />
-    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381116054758" ignored="false" />
+    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381116214446" ignored="false" />
     <file path="C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/rspec-core-2.14.5/lib/rspec/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897958" ignored="false" />
     <file path="/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897959" ignored="false" />
-    <file path="/AOPModule.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381116153600" ignored="false" />
-    <file path="/prueba.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381115763158" ignored="false" />
+    <file path="/AOPModule.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381117042094" ignored="false" />
+    <file path="/prueba.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381117061046" ignored="false" />
     <file path="/Ruby Console" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381105897709" ignored="false" />
     <file path="/temp.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381113565620" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,7 +47,7 @@
       <file leaf-file-name="AOPModule.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPModule.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="110" column="141" selection-start="2918" selection-end="2918" vertical-scroll-proportion="0.0">
+            <state line="114" column="6" selection-start="2975" selection-end="2999" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -56,7 +56,7 @@
       <file leaf-file-name="prueba.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AOP-Framework/prueba.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="42" selection-start="833" selection-end="833" vertical-scroll-proportion="0.7553957">
+            <state line="37" column="31" selection-start="883" selection-end="883" vertical-scroll-proportion="0.7146283">
               <folding />
             </state>
           </provider>
@@ -392,7 +392,11 @@
       <created>1381116057427</created>
       <updated>1381116057427</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Fixed en PC de metodos enumerados, ahora permite ingresar tanto simbolos como strings">
+      <created>1381116216573</created>
+      <updated>1381116216573</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -461,7 +465,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agegrado de  PC hierarchy y arrays" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed en PC de metodos enumerados, ahora permite ingresar tanto simbolos como strings" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -485,6 +489,7 @@
     <MESSAGE value="Agregado de PC defaults" />
     <MESSAGE value="Agregado de Point Cuts(method_start_with, solo bloque de clases,solo bloque de metodos), Se derivo logica comun a otro metodo privado para no repetir." />
     <MESSAGE value="Agegrado de  PC hierarchy y arrays" />
+    <MESSAGE value="Fixed en PC de metodos enumerados, ahora permite ingresar tanto simbolos como strings" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -534,14 +539,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPModule.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="141" selection-start="2918" selection-end="2918" vertical-scroll-proportion="0.0">
+        <state line="114" column="6" selection-start="2975" selection-end="2999" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AOP-Framework/prueba.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="42" selection-start="833" selection-end="833" vertical-scroll-proportion="0.7553957">
+        <state line="37" column="31" selection-start="883" selection-end="883" vertical-scroll-proportion="0.7146283">
           <folding />
         </state>
       </provider>

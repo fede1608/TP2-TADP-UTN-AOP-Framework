@@ -35,4 +35,5 @@ p aop.point_cut_hierarchy(Chau)
 p aop.point_cut_array_clase([Foo,Bar,Chau])
 p aop.point_cut_array_metodos([:point_cut,:otro_accessor])
 p aop.point_cut_array_metodos(["point_cut","otro_accessor"])
+p aop.point_cut_metodos_arity(2)
 

@@ -112,6 +112,11 @@ class AOPFramework
     point_cut_bloque_metodo(bloque_metodo)
   end
 
+  def point_cut_metodos_arity(aridad)
+    bloque_metodo=lambda{|metodo| metodo.arity==aridad }
+    point_cut_bloque_metodo(bloque_metodo)
+  end
+
   private
 
   def point_cut_core(bloque_clase,bloque_metodo,bloque_iterador)
