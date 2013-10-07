@@ -108,7 +108,7 @@ class AOPFramework
   end
 
   def point_cut_array_metodos(array_metodos)
-    bloque_metodo=lambda{|metodo| array_metodos.include?(metodo.name) }
+    bloque_metodo=lambda{|metodo| array_metodos.include?(metodo.name) || array_metodos.map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
     point_cut_bloque_metodo(bloque_metodo)
   end
 
