@@ -46,3 +46,4 @@ p aop.point_cut_OR(aop.point_cut_hierarchy(Chau),aop.point_cut_array_metodos(["p
 p aop.point_cut_AND(aop.point_cut_array_clase([Bar]),aop.point_cut_metodos_arity(1))
 p aop.point_cut_OR(aop.point_cut_AND(aop.point_cut_array_clase([Bar]),aop.point_cut_metodos_arity(1)),aop.point_cut_accessors())
 p aop.point_cut_class_NOT(aop.point_cut_hierarchy(Chau))
+p aop.point_cut_metodo_NOT(aop.point_cut_AND(aop.point_cut_array_clase([Bar]),aop.point_cut_metodos_arity(2)))

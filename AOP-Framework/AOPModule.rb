@@ -104,6 +104,12 @@ class AOPFramework
     point_cut(bloque_clase,lambda{|a| true})
   end
 
+  def point_cut_metodo_NOT(hash1)
+    bloque_metodo=lambda{|met| !hash1[:metodos].map{|met| met.inspect}.include?(met.inspect)}
+    bloque_clase=lambda{|clase| hash1[:clases].include?(clase)}
+    point_cut(bloque_clase,bloque_metodo)
+  end
+
   private
 
   def point_cut_core(bloque_clase,bloque_metodo,bloque_iterador)
