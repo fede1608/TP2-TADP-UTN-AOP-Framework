@@ -51,6 +51,7 @@ p aop.point_cut_metodo_NOT(aop.point_cut_AND(aop.point_cut_array_clase([Bar]),ao
 #Test de agregado de codigo
 p aop.point_cut_class_NOT(aop.point_cut_hierarchy(Chau))
 aop.add_behaviour(lambda {|met,*arguments| puts "Se utilizo el metodo #{met.name.to_s} y se recibio los parametros #{arguments.to_s}"}, lambda{|res| start_time = Time.now; puts (Time.now - start_time).to_s + " have elapsed"; puts "El resultado fue #{res.to_s}"})
+aop.logging
 p aop.metodos
 Bar.new.methodd1
 Bar.new.methodd("hello",1191991)

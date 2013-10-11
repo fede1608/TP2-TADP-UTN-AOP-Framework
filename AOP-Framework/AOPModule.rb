@@ -134,7 +134,7 @@ class AOPFramework
 
   def add_behaviour(before,after = Proc.new{})
     @metodos.each do |metodo|
-      old_sym = "orig_#{metodo.name.to_s}".to_sym
+      old_sym = ((97 + rand(25)).chr + "orig_#{metodo.name.to_s}" ).to_sym
       new_sym=  metodo.name
       puts "Se modifico el metodo: #{new_sym.to_s} de la Clase: #{metodo.owner.to_s}"
       #metodo.owner.class_eval("def #{metodo.name.to_s}(*args); puts 'Se Sobreescribio #{metodo.name.to_s}';end #self.orig_#{metodo.name.to_s}(*args);  end")
