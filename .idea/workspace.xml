@@ -9,11 +9,11 @@
     <ignored path="TP-AOP.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/test.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380942355994" ignored="false" />
-    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381190782530" ignored="false" />
+    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381464065267" ignored="false" />
     <file path="C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/rspec-core-2.14.5/lib/rspec/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897958" ignored="false" />
     <file path="/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897959" ignored="false" />
-    <file path="/AOPModule.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381463966491" ignored="false" />
-    <file path="/prueba.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381464026131" ignored="false" />
+    <file path="/AOPModule.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381497459775" ignored="false" />
+    <file path="/prueba.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381464576332" ignored="false" />
     <file path="/Ruby Console" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381105897709" ignored="false" />
     <file path="/temp.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381113565620" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -44,19 +44,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AOPModule.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="AOPModule.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPModule.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="111" column="25" selection-start="3634" selection-end="3634" vertical-scroll-proportion="0.0">
+            <state line="109" column="23" selection-start="3512" selection-end="3512" vertical-scroll-proportion="0.42746115">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="prueba.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="prueba.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AOP-Framework/prueba.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="27" selection-start="1435" selection-end="1435" vertical-scroll-proportion="0.7357513">
+            <state line="54" column="23" selection-start="1509" selection-end="1509" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -87,8 +87,8 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/AOP-Framework/test.rb" />
-        <option value="$PROJECT_DIR$/AOP-Framework/AOPModule.rb" />
         <option value="$PROJECT_DIR$/AOP-Framework/prueba.rb" />
+        <option value="$PROJECT_DIR$/AOP-Framework/AOPModule.rb" />
       </list>
     </option>
   </component>
@@ -412,7 +412,11 @@
       <created>1381190785251</created>
       <updated>1381190785251</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Test de agregado de codigo a los metodos mediate alias_method y class_eval">
+      <created>1381464068265</created>
+      <updated>1381464068265</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -481,7 +485,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agregado NOT de metodos" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test de agregado de codigo a los metodos mediate alias_method y class_eval" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -510,6 +514,7 @@
     <MESSAGE value="Implementados metodos OR y AND" />
     <MESSAGE value="Agregado NOT de clases" />
     <MESSAGE value="Agregado NOT de metodos" />
+    <MESSAGE value="Test de agregado de codigo a los metodos mediate alias_method y class_eval" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -559,16 +564,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPModule.rb">
+    <entry file="file://$PROJECT_DIR$/AOP-Framework/prueba.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="25" selection-start="3634" selection-end="3634" vertical-scroll-proportion="0.0">
+        <state line="54" column="23" selection-start="1509" selection-end="1509" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AOP-Framework/prueba.rb">
+    <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPModule.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="27" selection-start="1435" selection-end="1435" vertical-scroll-proportion="0.7357513">
+        <state line="109" column="23" selection-start="3512" selection-end="3512" vertical-scroll-proportion="0.42746115">
           <folding />
         </state>
       </provider>
