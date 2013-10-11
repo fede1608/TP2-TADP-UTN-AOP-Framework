@@ -13,7 +13,7 @@ class Bar
   def methodd(par1,par2)
 
   end
-  def methodd1(par1)
+  def methodd1
 
   end
 end
@@ -47,3 +47,8 @@ p aop.point_cut_AND(aop.point_cut_array_clase([Bar]),aop.point_cut_metodos_arity
 p aop.point_cut_OR(aop.point_cut_AND(aop.point_cut_array_clase([Bar]),aop.point_cut_metodos_arity(1)),aop.point_cut_accessors())
 p aop.point_cut_class_NOT(aop.point_cut_hierarchy(Chau))
 p aop.point_cut_metodo_NOT(aop.point_cut_AND(aop.point_cut_array_clase([Bar]),aop.point_cut_metodos_arity(2)))
+
+#Test de agregado de codigo
+aop.add_behaviour
+
+Bar.new.methodd1

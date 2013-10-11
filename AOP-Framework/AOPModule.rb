@@ -1,9 +1,3 @@
-
-
-
-
-
-
 class AOPFramework
   attr_accessor :metodos,:clases
   def initialize
@@ -108,6 +102,16 @@ class AOPFramework
     bloque_metodo=lambda{|met| !hash1[:metodos].map{|met| met.inspect}.include?(met.inspect)}
     bloque_clase=lambda{|clase| hash1[:clases].include?(clase)}
     point_cut(bloque_clase,bloque_metodo)
+  end
+
+  def add_behaviour
+    @metodos.each do |metodo|
+       p metodo.name
+       p metodo.owner
+      metodo.owner.class_eval("alias_method :orig_#{metodo.name.to_s}, :#{metodo.name.to_s}")
+       metodo.owner.class_eval("def #{metodo.name.to_s}; puts 'Se Sobreescribio #{metodo.name.to_s}'; orig_#{metodo.name.to_s}(code);  end")
+      metodo.call
+    end
   end
 
   private
