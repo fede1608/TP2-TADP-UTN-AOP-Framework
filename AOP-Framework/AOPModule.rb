@@ -66,23 +66,17 @@ module Aspect_Point_Cut
   end
 
   def point_cut_OR(hash1,hash2)
-    hash_OR=Hash[:clases => [], :metodos => []]
-    (hash_OR[:clases]<< hash1[:clases]) << hash2[:clases]
-    hash_OR[:clases].flatten!.uniq!
-    @clases=hash_OR[:clases]
-
-    hash_OR[:metodos]= hash1[:metodos]
-    hash2[:metodos].each{|met| hash_OR[:metodos].push(met) if !hash_OR[:metodos].map{|met| met.inspect}.include?(met.inspect)}
-    @metodos=hash_OR[:metodos].flatten.uniq
-    hash_OR[:metodos]=@metodos
-
-    hash_OR
+    @clases= hash1[:clases]
+    (@clases << hash2[:clases]).flatten!.uniq!
+    @metodos= hash1[:metodos]
+    hash2[:metodos].each{|met| @metodos.push(met) if !@metodos.map{|met| met.inspect}.include?(met.inspect)}
+    compile_hash
   end
 
   def point_cut_AND(hash1,hash2)
     @clases=hash1[:clases].select{|clase| hash2[:clases].include?(clase) }
     @metodos= hash1[:metodos].select{|met| hash2[:metodos].map{|met| met.inspect}.include?(met.inspect)}
-    Hash[:clases => @clases, :metodos => @metodos]
+    compile_hash
   end
 
   def point_cut_class_NOT(hash1)
@@ -98,13 +92,17 @@ module Aspect_Point_Cut
 
   private
 
+  def compile_hash
+    Hash[:clases => @clases, :metodos => @metodos]
+  end
+
   def point_cut_core(bloque_clase,bloque_metodo,bloque_iterador)
     initialize
     @clases=Object.subclasses.select(&bloque_clase)
     @clases.each(&bloque_iterador)
     @metodos_obj.flatten!
     @metodos=@metodos_obj.select(&bloque_metodo)
-    Hash[:clases => @clases, :metodos => @metodos]
+    compile_hash
   end
 end
 

@@ -43,7 +43,7 @@ p aop.point_cut_array_metodos([:point_cut,:otro_accessor])
 p aop.point_cut_array_metodos(["point_cut","otro_accessor"])
 p aop.point_cut_metodos_arity(2)
 p aop.point_cut_OR(aop.point_cut_hierarchy(Chau),aop.point_cut_array_metodos(["point_cut","otro_accessor"]))
-p aop.point_cut_AND(aop.point_cut_array_clase([Bar]),aop.point_cut_metodos_arity(1))
+p aop.point_cut_AND(aop.point_cut_array_clase([Bar]),aop.point_cut_metodos_arity(0))
 p aop.point_cut_OR(aop.point_cut_AND(aop.point_cut_array_clase([Bar]),aop.point_cut_metodos_arity(1)),aop.point_cut_accessors())
 p aop.point_cut_class_NOT(aop.point_cut_hierarchy(Chau))
 p aop.point_cut_metodo_NOT(aop.point_cut_AND(aop.point_cut_array_clase([Bar]),aop.point_cut_metodos_arity(2)))
@@ -57,7 +57,7 @@ Bar.new.methodd("hello",1191991)
 Foo.new.un_accessor=(2)
 
 #Test de Aspecto de loggeo
-p aop.point_cut_hierarchy(Chau)
+p aop.point_cut_OR(aop.point_cut_hierarchy(Chau),aop.point_cut_array_clase([Bar]))
 aop.logging
 Chau.new.otro_accessor2
 Chau.new.otro_accessor2=(6)
