@@ -9,11 +9,11 @@
     <ignored path="TP-AOP.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/test.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380942355994" ignored="false" />
-    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381497530215" ignored="false" />
+    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381498697032" ignored="false" />
     <file path="C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/rspec-core-2.14.5/lib/rspec/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897958" ignored="false" />
     <file path="/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897959" ignored="false" />
-    <file path="/AOPModule.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381498667023" ignored="false" />
-    <file path="/prueba.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381498622057" ignored="false" />
+    <file path="/AOPModule.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381502004544" ignored="false" />
+    <file path="/prueba.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381502062456" ignored="false" />
     <file path="/Ruby Console" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381105897709" ignored="false" />
     <file path="/temp.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381113565620" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,7 +47,7 @@
       <file leaf-file-name="AOPModule.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPModule.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="114" column="24" selection-start="3761" selection-end="3761" vertical-scroll-proportion="0.48445597">
+            <state line="120" column="122" selection-start="4022" selection-end="4022" vertical-scroll-proportion="0.28756475">
               <folding />
             </state>
           </provider>
@@ -56,7 +56,7 @@
       <file leaf-file-name="prueba.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AOP-Framework/prueba.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="10" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0">
+            <state line="51" column="15" selection-start="1461" selection-end="1461" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -87,8 +87,8 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/AOP-Framework/test.rb" />
-        <option value="$PROJECT_DIR$/AOP-Framework/prueba.rb" />
         <option value="$PROJECT_DIR$/AOP-Framework/AOPModule.rb" />
+        <option value="$PROJECT_DIR$/AOP-Framework/prueba.rb" />
       </list>
     </option>
   </component>
@@ -420,7 +420,11 @@
       <created>1381497533179</created>
       <updated>1381497533179</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Se agrega lambdas antes y desp de ejecutar el old metodo">
+      <created>1381498699067</created>
+      <updated>1381498699067</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -489,7 +493,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Se mejoro el metodo add_bahaviour para cualquier metodo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Se agrega lambdas antes y desp de ejecutar el old metodo" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -520,6 +524,7 @@
     <MESSAGE value="Agregado NOT de metodos" />
     <MESSAGE value="Test de agregado de codigo a los metodos mediate alias_method y class_eval" />
     <MESSAGE value="Se mejoro el metodo add_bahaviour para cualquier metodo" />
+    <MESSAGE value="Se agrega lambdas antes y desp de ejecutar el old metodo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -571,14 +576,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AOP-Framework/prueba.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="10" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0">
+        <state line="51" column="15" selection-start="1461" selection-end="1461" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPModule.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="114" column="24" selection-start="3761" selection-end="3761" vertical-scroll-proportion="0.48445597">
+        <state line="120" column="122" selection-start="4022" selection-end="4022" vertical-scroll-proportion="0.28756475">
           <folding />
         </state>
       </provider>

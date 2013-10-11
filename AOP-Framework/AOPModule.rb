@@ -1,11 +1,4 @@
-class AOPFramework
-  attr_accessor :metodos,:clases
-  def initialize
-    @clases=[]
-    @metodos_obj=[]
-    @metodos=[]
-  end
-
+module Aspect_Point_Cut
   def point_cut(bloque_clase,bloque_metodo)
     bloque_iterator = lambda do |klass|
       @metodos_obj << klass.instance_methods(false).map{|met| klass.new.method(met)}
@@ -14,13 +7,11 @@ class AOPFramework
   end
 
   def point_cut_bloque_clase(bloque_clase)
-   bloque_metodo= lambda {|a| true}
-   point_cut(bloque_clase,bloque_metodo)
+    point_cut(bloque_clase,lambda {|a| true})
   end
 
   def point_cut_bloque_metodo(bloque_metodo)
-    bloque_clase= lambda {|a| true}
-    point_cut(bloque_clase,bloque_metodo)
+    point_cut(lambda {|a| true},bloque_metodo)
   end
 
   def point_cut_regexp(reg_clases,reg_metodos)
@@ -47,15 +38,16 @@ class AOPFramework
   def point_cut_accessors(bloque_clase = lambda {|clase| true})
     bloque_metodo = lambda{|a| true}
     bloque_iterator = lambda { |klass|
-        @metodos_obj << klass.attr_readers.map{|met| klass.new.method(met)}
-        @metodos_obj << klass.attr_writers.map{|met| klass.new.method(met)}
+      @metodos_obj << klass.attr_readers.map{|met| klass.new.method(met)}
+      @metodos_obj << klass.attr_writers.map{|met| klass.new.method(met)}
     }
     point_cut_core(bloque_clase,bloque_metodo,bloque_iterator)
   end
 
   def point_cut_hierarchy(clase)
-    bloque_clase=lambda{|klass| clase.ancestors.include?(klass) }
-    point_cut_bloque_clase(bloque_clase)
+    #bloque_clase=lambda{|klass| clase.ancestors.include?(klass) }
+    #point_cut_bloque_clase(bloque_clase)
+    point_cut_array_clase(clase.ancestors)
   end
 
   def point_cut_array_clase(array_clase)
@@ -104,26 +96,6 @@ class AOPFramework
     point_cut(bloque_clase,bloque_metodo)
   end
 
-  def add_behaviour(before,after)
-    @metodos.each do |metodo|
-      p metodo.name
-      p metodo.owner
-      old_sym = "orig_#{metodo.name.to_s}".to_sym
-      new_sym=  metodo.name
-      puts "Se modifico el metodo #{new_sym.to_s}"
-      metodo.owner.class_eval("alias_method :#{old_sym.to_s}, :#{new_sym.to_s}")
-      #metodo.owner.class_eval("def #{metodo.name.to_s}(*args); puts 'Se Sobreescribio #{metodo.name.to_s}';end #self.orig_#{metodo.name.to_s}(*args);  end")
-      metodo.owner.class_eval do
-        define_method new_sym do |*arguments|
-          before.call(new_sym,*arguments)
-          res = self.send(old_sym,*arguments)
-          after.call(res)
-          res
-        end
-      end
-    end
-  end
-
   private
 
   def point_cut_core(bloque_clase,bloque_metodo,bloque_iterador)
@@ -134,6 +106,52 @@ class AOPFramework
     @metodos=@metodos_obj.select(&bloque_metodo)
     Hash[:clases => @clases, :metodos => @metodos]
   end
+end
+
+module Aspect_example
+
+  def logging
+    require 'logger'
+    logger = Logger.new(STDOUT)
+    logger.level = Logger::INFO
+    logger.formatter = lambda do |severity, datetime, progname, msg|
+      "#{datetime} #{severity}: #{msg}\n"
+    end
+    logger.info "Iniciando Aspecto de loggeo"
+    self.add_behaviour( lambda {|met,*args| logger.info "Se ejecuto el metodo: #{met.name.to_s} de la Clase: #{met.owner.name} con los parametros: #{args.to_s}" })
+  end
+end
+
+
+class AOPFramework
+  attr_accessor :metodos,:clases
+  def initialize
+    @clases=[]
+    @metodos_obj=[]
+    @metodos=[]
+  end
+
+  include Aspect_Point_Cut
+  include Aspect_example
+
+  def add_behaviour(before,after = Proc.new{})
+    @metodos.each do |metodo|
+      old_sym = "orig_#{metodo.name.to_s}".to_sym
+      new_sym=  metodo.name
+      puts "Se modifico el metodo: #{new_sym.to_s} de la Clase: #{metodo.owner.to_s}"
+      #metodo.owner.class_eval("def #{metodo.name.to_s}(*args); puts 'Se Sobreescribio #{metodo.name.to_s}';end #self.orig_#{metodo.name.to_s}(*args);  end")
+      metodo.owner.class_eval("alias_method :#{old_sym.to_s}, :#{new_sym.to_s}")
+      metodo.owner.class_eval do
+        define_method new_sym do |*arguments|
+          before.call(metodo,*arguments)
+          res = self.send(old_sym,*arguments)
+          after.call(res)
+          res
+        end
+      end
+    end
+  end
+
 
 end
 
