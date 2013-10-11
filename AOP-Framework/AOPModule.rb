@@ -104,20 +104,21 @@ class AOPFramework
     point_cut(bloque_clase,bloque_metodo)
   end
 
-  def add_behaviour
+  def add_behaviour(before,after)
     @metodos.each do |metodo|
       p metodo.name
       p metodo.owner
       old_sym = "orig_#{metodo.name.to_s}".to_sym
       new_sym=  metodo.name
-      metodo.owner.class_eval("alias_method :orig_#{metodo.name.to_s}, :#{metodo.name.to_s}")
+      puts "Se modifico el metodo #{new_sym.to_s}"
+      metodo.owner.class_eval("alias_method :#{old_sym.to_s}, :#{new_sym.to_s}")
       #metodo.owner.class_eval("def #{metodo.name.to_s}(*args); puts 'Se Sobreescribio #{metodo.name.to_s}';end #self.orig_#{metodo.name.to_s}(*args);  end")
       metodo.owner.class_eval do
         define_method new_sym do |*arguments|
-          start_time = Time.now
-          puts "Se cambio el metodo #{new_sym.to_s}"
-          self.send(old_sym,*arguments)
-          puts (Time.now - start_time).to_s + " have elapsed"
+          before.call(new_sym,*arguments)
+          res = self.send(old_sym,*arguments)
+          after.call(res)
+          res
         end
       end
     end
