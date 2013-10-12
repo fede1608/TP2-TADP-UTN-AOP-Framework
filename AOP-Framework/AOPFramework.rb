@@ -56,6 +56,7 @@ class Pointcut_Builder
     p.clases.each do |klass|
       p.metodos << klass.instance_methods(false).map{|met| klass.new.method(met)}
     end
+    p.metodos.flatten!
 
     if !@options[:method_array].nil?
       p.metodos.select!{|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
