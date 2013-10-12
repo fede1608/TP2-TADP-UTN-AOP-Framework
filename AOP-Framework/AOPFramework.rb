@@ -31,6 +31,35 @@ class Pointcut_Builder
 
   end
 
+  def build
+    baseClass=Object.subclasses
+    p=Pointcut.new
+    if !@options[:class_array].nil?
+      p.clases = @options[:class_array]
+    elsif !@options[:class_hierarchy].nil?
+      p.clases = baseClass.select{|c| @options[:class_hierarchy].ancestors.include?(c)}
+    elsif !@options[:class_childs].nil?
+      p.clases = baseClass.select{|c| c.superclass == @options[:class_childs]}
+    else
+      p.clases= baseClass.clone
+    end
+
+    if !@options[:class_block].nil?
+      p.clases.select!(&bloque_clase)
+    end
+    if !@options[:class_regex].nil?
+      p.clases.select!{|a| a.name.to_s =~ @options[:class_regex]}
+    end
+    if !@options[:class_start_with].nil?
+      p.clases.select!{|clase| clase.name.to_s.start_with?(@options[:class_start_with])}
+    end
+    p.clases.each do |klass|
+      p.metodos << klass.instance_methods(false).map{|met| klass.new.method(met)}
+    end
+
+    p
+  end
+
   def class_array (val)
     @options[:class_array]=val
     self
@@ -88,10 +117,7 @@ class Pointcut_Builder
     self
   end
 
-  def build
-    p=Pointcut.new
 
-  end
 
 end
 
