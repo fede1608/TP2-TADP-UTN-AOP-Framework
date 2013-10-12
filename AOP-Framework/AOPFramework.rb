@@ -54,7 +54,7 @@ class Pointcut_Builder
       p.clases.select!{|clase| clase.name.to_s.start_with?(@options[:class_start_with])}
     end
     p.clases.each do |klass|
-      p.metodos << klass.instance_methods(false).map{|met| klass.new.method(met)}
+      p.metodos << klass.instance_methods(false).map{|met| klass.instance_method(met)}
     end
     p.metodos.flatten!
 
