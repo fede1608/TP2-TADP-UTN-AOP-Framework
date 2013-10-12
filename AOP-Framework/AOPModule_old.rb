@@ -86,7 +86,7 @@ module Aspect_Point_Cut
 
   def point_cut_metodo_NOT(hash1)
     bloque_metodo=lambda{|met| !hash1[:metodos].map{|met| met.inspect}.include?(met.inspect)}
-    bloque_clase=lambda{|clase| hash1[:clases].include?(clase)}
+    bloque_clase=lambda{|clase| !hash1[:clases].include?(clase)}
     point_cut(bloque_clase,bloque_metodo)
   end
 
