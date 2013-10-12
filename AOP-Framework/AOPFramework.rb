@@ -45,7 +45,7 @@ class Pointcut_Builder
     end
 
     if !@options[:class_block].nil?
-      p.clases.select!(&bloque_clase)
+      p.clases.select!(&@options[:class_block])
     end
     if !@options[:class_regex].nil?
       p.clases.select!{|a| a.name.to_s =~ @options[:class_regex]}
@@ -55,6 +55,31 @@ class Pointcut_Builder
     end
     p.clases.each do |klass|
       p.metodos << klass.instance_methods(false).map{|met| klass.new.method(met)}
+    end
+
+    if !@options[:method_array].nil?
+      p.metodos.select!{|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
+    end
+    if @options[:method_accessor]
+      p.metodos.select!{|m| m.owner.attr_readers.include?(m.name) || m.owner.attr_writers.include?(m.name) }
+    end
+    if !@options[:method_parameter_name].nil?
+
+    end
+    if !@options[:method_parameters_type].nil?
+
+    end
+    if !@options[:method_block].nil?
+      p.metodos.select!(&@options[:method_block])
+    end
+    if !@options[:method_regex].nil?
+      p.metodos.select!{|a| a.name.to_s =~ @options[:method_regex]}
+    end
+    if !@options[:method_start_with].nil?
+      p.metodos.select!{|m| m.name.to_s.start_with?(@options[:method_start_with])}
+    end
+    if !@options[:method_arity].nil?
+      p.metodos.select!{|metodo| metodo.arity==@options[:method_arity] }
     end
 
     p

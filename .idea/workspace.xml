@@ -3,20 +3,21 @@
   <component name="ChangeListManager">
     <list default="true" id="3890c00f-2c76-431a-88cc-16e1c4ab182a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AOP-Framework/AOPFramework.rb" afterPath="$PROJECT_DIR$/AOP-Framework/AOPFramework.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tests/example.rb" afterPath="$PROJECT_DIR$/Tests/example.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="TP-AOP.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/test.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380942355994" ignored="false" />
-    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381539387874" ignored="false" />
+    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381541570146" ignored="false" />
     <file path="C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/rspec-core-2.14.5/lib/rspec/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897958" ignored="false" />
     <file path="/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897959" ignored="false" />
     <file path="/AOPModule.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381504021760" ignored="false" />
     <file path="/prueba.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381502603416" ignored="false" />
     <file path="/Ruby Console" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381539903265" ignored="false" />
     <file path="/temp.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381531445794" ignored="false" />
-    <file path="/AOPFramework.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381541521956" ignored="false" />
-    <file path="/example.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381538846562" ignored="false" />
+    <file path="/AOPFramework.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381542554754" ignored="false" />
+    <file path="/example.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381541699581" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +40,7 @@
       <file leaf-file-name="AOPFramework.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPFramework.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="15" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.6165803">
+            <state line="82" column="7" selection-start="2606" selection-end="2606" vertical-scroll-proportion="1.0440414">
               <folding />
             </state>
           </provider>
@@ -48,7 +49,7 @@
       <file leaf-file-name="example.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Tests/example.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="22" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
+            <state line="5" column="26" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -57,7 +58,7 @@
       <file leaf-file-name="AOPModule_old.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPModule_old.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="83" selection-start="100" selection-end="200" vertical-scroll-proportion="0.0">
+            <state line="63" column="24" selection-start="2088" selection-end="2120" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -204,7 +205,7 @@
       <recent name="C:\Users\Fede\RubymineProjects\TP-AOP\AOP-Framework" />
     </key>
   </component>
-  <component name="RunManager" selected="Ruby.ejemplo_old">
+  <component name="RunManager" selected="Ruby.example">
     <configuration default="false" name="1AOP_old" type="RubyRunConfigurationType" factoryName="Ruby" temporary="true">
       <module name="TP-AOP" />
       <RUBY_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
@@ -386,9 +387,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Ruby.ejemplo_old" />
-        <item index="1" class="java.lang.String" itemvalue="IRB console.IRB console" />
-        <item index="2" class="java.lang.String" itemvalue="Ruby.example" />
+        <item index="0" class="java.lang.String" itemvalue="Ruby.example" />
+        <item index="1" class="java.lang.String" itemvalue="Ruby.ejemplo_old" />
+        <item index="2" class="java.lang.String" itemvalue="IRB console.IRB console" />
         <item index="3" class="java.lang.String" itemvalue="Ruby.AOPFramework" />
         <item index="4" class="java.lang.String" itemvalue="IRB console.IRB console" />
       </list>
@@ -515,7 +516,11 @@
       <created>1381539390368</created>
       <updated>1381539390368</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Implementado parte clase del build">
+      <created>1381541572741</created>
+      <updated>1381541572741</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -584,7 +589,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Se agrega metodos de setteo de config al builder + la implementacion del Aspect" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementado parte clase del build" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -622,6 +627,7 @@
     <MESSAGE value="Se minimizo probabilidad de error al wrappear dos o mas aspects a (n/10000) TODO: erradicar probabilidad de error" />
     <MESSAGE value="Agregado de Nueva version del Framework usando el patron Builder" />
     <MESSAGE value="Se agrega metodos de setteo de config al builder + la implementacion del Aspect" />
+    <MESSAGE value="Implementado parte clase del build" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -680,21 +686,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Tests/example.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="22" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
+        <state line="5" column="26" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPModule_old.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="83" selection-start="100" selection-end="200" vertical-scroll-proportion="0.0">
+        <state line="63" column="24" selection-start="2088" selection-end="2120" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPFramework.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="15" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.6165803">
+        <state line="82" column="7" selection-start="2606" selection-end="2606" vertical-scroll-proportion="1.0440414">
           <folding />
         </state>
       </provider>
