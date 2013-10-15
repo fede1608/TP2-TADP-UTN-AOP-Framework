@@ -175,14 +175,14 @@ class Pointcut
       when :metodo
         metodos_obj = []
         @clases.each  do |klass|
-          metodos_obj << klass.instance_methods(false).map{|met| klass.new.method(met)}
+          metodos_obj << klass.instance_methods(false).map{|met| klass.instance_method(met)}
         end
         @metodos = metodos_obj.flatten.select{|met| !@metodos.map{|met| met.inspect}.include?(met.inspect)}
       when :clase
         @clases = Object.subclasses.select{|clase| !@clases.include?(clase)}
         @metodos = []
         @clases.each  do |klass|
-          @metodos << klass.instance_methods(false).map{|met| klass.new.method(met)}
+          @metodos << klass.instance_methods(false).map{|met| klass.instance_method(met)}
         end
         @metodos.flatten!
     end
@@ -218,16 +218,16 @@ class Aspect
 
   def add_behaviour(where,behaviour)
     @pointcut.metodos.each do |metodo|
-      old_sym = ((0...8).map { (65 + rand(26)).chr }.join + "__#{metodo.name.to_s}__" ).to_sym
+      old_sym = ((0...8).map { (65 + rand(26)).chr }.join + "__#{metodo.name.to_s}" ).to_sym
       new_sym=  metodo.name
       puts "Se modifico el metodo: #{new_sym.to_s} de la Clase: #{metodo.owner.to_s}"
       #metodo.owner.class_eval("def #{metodo.name.to_s}(*args); puts 'Se Sobreescribio #{metodo.name.to_s}';end #self.orig_#{metodo.name.to_s}(*args);  end")
-      metodo.owner.class_eval("alias_method :#{old_sym.to_s}, :#{new_sym.to_s}")
+      metodo.owner.class_eval("alias_method :#{old_sym.to_s} , :#{new_sym.to_s}")
       case where
         when :before
           metodo.owner.class_eval do
             define_method new_sym do |*arguments|
-              behaviour.call(metodo,*arguments)
+              behaviour.call(self.method(metodo.name),*arguments)
               self.send(old_sym,*arguments)
             end
           end
@@ -235,14 +235,14 @@ class Aspect
           metodo.owner.class_eval do
             define_method new_sym do |*arguments|
               res = self.send(old_sym,*arguments)
-              behaviour.call(metodo,res)
+              behaviour.call(self.method(metodo.name),res)
               res
             end
           end
         when :instead
           metodo.owner.class_eval do
             define_method new_sym do |*arguments|
-              behaviour.call(metodo,res)
+              behaviour.call(self.method(metodo.name),res)
             end
           end
         when :on_error
@@ -250,8 +250,8 @@ class Aspect
             define_method new_sym do |*arguments|
               begin
               self.send(old_sym,*arguments)
-              rescue
-              behaviour.call(self.method(metodo.name))
+              rescue Exception => e
+              behaviour.call(self.method(metodo.name), e)
               end
             end
           end

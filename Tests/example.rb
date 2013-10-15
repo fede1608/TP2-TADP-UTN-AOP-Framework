@@ -19,8 +19,8 @@ aspecto.add_behaviour(:after, lambda {|met,res|  puts (Time.now - @start_time).t
 aspecto.logging
 
 
-Foo.new.algo
-Foo.new.heavy
+p Foo.new.algo
+p Foo.new.heavy
 p Foo.new.method(:otro).parameters
 
 class Hola
@@ -34,9 +34,33 @@ class Chau < Hola
 end
 aspecto2=Aspect.new
 aspecto2.pointcut=(aspecto2.builder.class_hierarchy(Chau).method_arity(0).build)
-aspecto2.add_behaviour(:on_error,lambda {|metodo| a= metodo.receiver.instance_variables; p metodo.receiver.instance_variable_get(a[0])})
+aspecto2.add_behaviour(:on_error,lambda {|metodo, e| a= metodo.receiver.instance_variables;  p metodo.receiver.instance_variable_get(a[0]); p e.to_s })
 
 a=Hola.new
 a.otro=(7)
 a.shit
 p a.otro
+
+
+class Foo2
+  attr_accessor :algo,:otro
+
+  def heavy
+    5
+  end
+end
+class Bar2 < Foo2
+end
+
+cacheAspecto=Aspect.new
+cacheAspecto.pointcut=(cacheAspecto.builder.class_array([Foo2,Bar2]).build)
+
+p cacheAspecto.builder.class_array([Foo2,Bar2]).method_accessor(true).build.not!(:metodo).metodos
+cacheAspecto.pointcut.and!(cacheAspecto.builder.class_array([Foo2,Bar2]).method_accessor(true).build.not!(:metodo))
+cacheAspecto.add_behaviour(:before, lambda {|metodo, *args| if metodo.receiver.algo == 5; metodo.receiver.otro=75; raise "error";  end})
+cacheAspecto.add_behaviour(:on_error,lambda{|met, e|  met.receiver.otro })
+
+a=Foo2.new
+p a.algo=(5)
+p a.heavy
+
