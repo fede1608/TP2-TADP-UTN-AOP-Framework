@@ -2,21 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3890c00f-2c76-431a-88cc-16e1c4ab182a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tests/example.rb" afterPath="$PROJECT_DIR$/Tests/example.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AOP-Framework/AOPFramework.rb" afterPath="$PROJECT_DIR$/AOP-Framework/AOPFramework.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="TP-AOP.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/test.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380942355994" ignored="false" />
-    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381808957779" ignored="false" />
+    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381847615084" ignored="false" />
     <file path="C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/rspec-core-2.14.5/lib/rspec/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897958" ignored="false" />
     <file path="/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897959" ignored="false" />
     <file path="/AOPModule.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381504021760" ignored="false" />
     <file path="/prueba.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381502603416" ignored="false" />
     <file path="/Ruby Console" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381539903265" ignored="false" />
     <file path="/temp.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381531445794" ignored="false" />
-    <file path="/AOPFramework.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381808436820" ignored="false" />
+    <file path="/AOPFramework.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381848263725" ignored="false" />
     <file path="/example.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381846839914" ignored="false" />
+    <file path="/Example_cache_sin_estado.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381847558664" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,19 +37,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AOPFramework.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="AOPFramework.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPFramework.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="184" column="88" selection-start="4852" selection-end="4852" vertical-scroll-proportion="0.0">
+            <state line="204" column="89" selection-start="5470" selection-end="5470" vertical-scroll-proportion="0.5792079">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="example.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="example.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Tests/example.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="298" selection-start="1629" selection-end="1629" vertical-scroll-proportion="0.15841584">
+            <state line="0" column="0" selection-start="0" selection-end="48" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Example_cache_sin_estado.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Tests/Example_cache_sin_estado.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="40" column="0" selection-start="1548" selection-end="1548" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -91,8 +101,9 @@
         <option value="$PROJECT_DIR$/AOP-Framework/prueba.rb" />
         <option value="$PROJECT_DIR$/AOP-Framework/AOPModule.rb" />
         <option value="$PROJECT_DIR$/AOP-Framework/AOPModule_old.rb" />
-        <option value="$PROJECT_DIR$/AOP-Framework/AOPFramework.rb" />
         <option value="$PROJECT_DIR$/Tests/example.rb" />
+        <option value="$PROJECT_DIR$/Tests/Example_cache_sin_estado.rb" />
+        <option value="$PROJECT_DIR$/AOP-Framework/AOPFramework.rb" />
       </list>
     </option>
   </component>
@@ -195,25 +206,7 @@
       <recent name="C:\Users\Fede\RubymineProjects\TP-AOP\AOP-Framework" />
     </key>
   </component>
-  <component name="RunManager" selected="Ruby.example">
-    <configuration default="false" name="1AOP_old" type="RubyRunConfigurationType" factoryName="Ruby" temporary="true">
-      <module name="TP-AOP" />
-      <RUBY_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
-      <RUBY_RUN_CONFIG NAME="WORK DIR" VALUE="$PROJECT_DIR$/AOP-Framework" />
-      <RUBY_RUN_CONFIG NAME="SHOULD_USE_SDK" VALUE="true" />
-      <RUBY_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="ruby-2.0.0-p247" />
-      <RUBY_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
-      <envs />
-      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
-      <EXTENSION ID="JRubyRunConfigurationExtension" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov" />
-      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
-      <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$PROJECT_DIR$/AOP-Framework/1AOP_old.rb" />
-      <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
-      <RunnerSettings RunnerId="RubyRunner" />
-      <ConfigurationWrapper RunnerId="RubyRunner" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Ruby.Example_cache_sin_estado">
     <configuration default="false" name="ejemplo_old" type="RubyRunConfigurationType" factoryName="Ruby" temporary="true">
       <module name="TP-AOP" />
       <RUBY_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
@@ -283,6 +276,24 @@
       <IRB_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="C:/Ruby200-x64/bin/irb" />
       <IRB_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="--prompt simple" />
       <IRB_RUN_CONFIG NAME="IS_RAILS_CONSOLE" VALUE="false" />
+      <RunnerSettings RunnerId="RubyRunner" />
+      <ConfigurationWrapper RunnerId="RubyRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Example_cache_sin_estado" type="RubyRunConfigurationType" factoryName="Ruby" temporary="true">
+      <module name="TP-AOP" />
+      <RUBY_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RUBY_RUN_CONFIG NAME="WORK DIR" VALUE="$PROJECT_DIR$/Tests" />
+      <RUBY_RUN_CONFIG NAME="SHOULD_USE_SDK" VALUE="true" />
+      <RUBY_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="ruby-2.0.0-p247" />
+      <RUBY_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov" />
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$PROJECT_DIR$/Tests/Example_cache_sin_estado.rb" />
+      <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
       <RunnerSettings RunnerId="RubyRunner" />
       <ConfigurationWrapper RunnerId="RubyRunner" />
       <method />
@@ -369,19 +380,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Ruby.1AOP_old" />
-      <item index="1" class="java.lang.String" itemvalue="Ruby.ejemplo_old" />
-      <item index="2" class="java.lang.String" itemvalue="Ruby.AOPFramework" />
-      <item index="3" class="java.lang.String" itemvalue="Ruby.example" />
-      <item index="4" class="java.lang.String" itemvalue="IRB console.IRB console" />
+      <item index="0" class="java.lang.String" itemvalue="Ruby.ejemplo_old" />
+      <item index="1" class="java.lang.String" itemvalue="Ruby.AOPFramework" />
+      <item index="2" class="java.lang.String" itemvalue="Ruby.example" />
+      <item index="3" class="java.lang.String" itemvalue="IRB console.IRB console" />
+      <item index="4" class="java.lang.String" itemvalue="Ruby.Example_cache_sin_estado" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Ruby.example" />
-        <item index="1" class="java.lang.String" itemvalue="Ruby.ejemplo_old" />
-        <item index="2" class="java.lang.String" itemvalue="IRB console.IRB console" />
-        <item index="3" class="java.lang.String" itemvalue="Ruby.AOPFramework" />
-        <item index="4" class="java.lang.String" itemvalue="IRB console.IRB console" />
+        <item index="0" class="java.lang.String" itemvalue="Ruby.Example_cache_sin_estado" />
+        <item index="1" class="java.lang.String" itemvalue="Ruby.example" />
+        <item index="2" class="java.lang.String" itemvalue="Ruby.ejemplo_old" />
+        <item index="3" class="java.lang.String" itemvalue="IRB console.IRB console" />
+        <item index="4" class="java.lang.String" itemvalue="Ruby.AOPFramework" />
       </list>
     </recent_temporary>
   </component>
@@ -534,7 +545,15 @@
       <created>1381808959800</created>
       <updated>1381808959800</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Added ejemplo cache general funcionando">
+      <created>1381846911690</created>
+      <updated>1381846911690</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Cache sin estado, para cada metodo en particular implementada a nivel usuario.">
+      <created>1381847611765</created>
+      <updated>1381847611765</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -603,7 +622,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="mas pruebas para cache" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cache sin estado, para cada metodo en particular implementada a nivel usuario." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -617,8 +636,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Replanteado el ejercicio con bloques" />
-    <MESSAGE value="Agregado de PC defaults" />
     <MESSAGE value="Agregado de Point Cuts(method_start_with, solo bloque de clases,solo bloque de metodos), Se derivo logica comun a otro metodo privado para no repetir." />
     <MESSAGE value="Agegrado de  PC hierarchy y arrays" />
     <MESSAGE value="Fixed en PC de metodos enumerados, ahora permite ingresar tanto simbolos como strings" />
@@ -642,6 +659,8 @@
     <MESSAGE value="Modificado codigo para adaptarse a lo requerido en el punto 4.1 del tp" />
     <MESSAGE value="Fixed bugs en el not + pruebas para el punto de cache" />
     <MESSAGE value="mas pruebas para cache" />
+    <MESSAGE value="Added ejemplo cache general funcionando" />
+    <MESSAGE value="Cache sin estado, para cada metodo en particular implementada a nivel usuario." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -733,16 +752,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPFramework.rb">
+    <entry file="file://$PROJECT_DIR$/Tests/Example_cache_sin_estado.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="184" column="88" selection-start="4852" selection-end="4852" vertical-scroll-proportion="0.0">
+        <state line="40" column="0" selection-start="1548" selection-end="1548" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tests/example.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="298" selection-start="1629" selection-end="1629" vertical-scroll-proportion="0.15841584">
+        <state line="0" column="0" selection-start="0" selection-end="48" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AOP-Framework/AOPFramework.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="204" column="89" selection-start="5470" selection-end="5470" vertical-scroll-proportion="0.5792079">
           <folding />
         </state>
       </provider>

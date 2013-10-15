@@ -202,6 +202,7 @@ module Aspect_examples
     end
     logger.info "Iniciando Aspecto de loggeo"
     self.add_behaviour(:before, lambda {|met,*args| logger.info "Se ejecuto el metodo: #{met.name.to_s} de la Clase: #{met.owner.name} con los parametros: #{args.to_s}" })
+    self.add_behaviour(:after, lambda {|met,res| logger.info "El resultado es: #{res.to_s}" })
   end
 
 end
