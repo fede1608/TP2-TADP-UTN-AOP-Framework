@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3890c00f-2c76-431a-88cc-16e1c4ab182a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AOP-Framework/AOPFramework.rb" afterPath="$PROJECT_DIR$/AOP-Framework/AOPFramework.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tests/example.rb" afterPath="$PROJECT_DIR$/Tests/example.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="TP-AOP.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/test.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380942355994" ignored="false" />
-    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381805103018" ignored="false" />
+    <file path="/Dummy.txt" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381808577962" ignored="false" />
     <file path="C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/rspec-core-2.14.5/lib/rspec/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897958" ignored="false" />
     <file path="/core.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1380667897959" ignored="false" />
     <file path="/AOPModule.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381504021760" ignored="false" />
@@ -17,7 +16,7 @@
     <file path="/Ruby Console" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381539903265" ignored="false" />
     <file path="/temp.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381531445794" ignored="false" />
     <file path="/AOPFramework.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381808436820" ignored="false" />
-    <file path="/example.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381808490198" ignored="false" />
+    <file path="/example.rb" changelist="3890c00f-2c76-431a-88cc-16e1c4ab182a" time="1381808904579" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +48,7 @@
       <file leaf-file-name="example.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Tests/example.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="60" selection-start="1454" selection-end="1454" vertical-scroll-proportion="0.4529703">
+            <state line="67" column="10" selection-start="1601" selection-end="1601" vertical-scroll-proportion="0.87376237">
               <folding />
             </state>
           </provider>
@@ -468,7 +467,11 @@
       <created>1381805106709</created>
       <updated>1381805106709</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Fixed bugs en el not + pruebas para el punto de cache">
+      <created>1381808580268</created>
+      <updated>1381808580268</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -537,7 +540,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modificado codigo para adaptarse a lo requerido en el punto 4.1 del tp" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed bugs en el not + pruebas para el punto de cache" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -551,7 +554,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Formateo de codigo" />
     <MESSAGE value="Agregado array de objetos metodos" />
     <MESSAGE value="Replanteado el ejercicio con bloques" />
     <MESSAGE value="Agregado de PC defaults" />
@@ -576,6 +578,7 @@
     <MESSAGE value="Agregado de ejemplos de uso" />
     <MESSAGE value="Minifix en los filters del builder" />
     <MESSAGE value="Modificado codigo para adaptarse a lo requerido en el punto 4.1 del tp" />
+    <MESSAGE value="Fixed bugs en el not + pruebas para el punto de cache" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -676,7 +679,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Tests/example.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="60" selection-start="1454" selection-end="1454" vertical-scroll-proportion="0.4529703">
+        <state line="67" column="10" selection-start="1601" selection-end="1601" vertical-scroll-proportion="0.87376237">
           <folding />
         </state>
       </provider>

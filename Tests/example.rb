@@ -46,7 +46,7 @@ class Foo2
   attr_accessor :algo,:otro
 
   def heavy
-    5
+    self.algo
   end
 end
 class Bar2 < Foo2
@@ -54,13 +54,17 @@ end
 
 cacheAspecto=Aspect.new
 cacheAspecto.pointcut=(cacheAspecto.builder.class_array([Foo2,Bar2]).build)
-
-p cacheAspecto.builder.class_array([Foo2,Bar2]).method_accessor(true).build.not!(:metodo).metodos
+cacheAspecto.logging
 cacheAspecto.pointcut.and!(cacheAspecto.builder.class_array([Foo2,Bar2]).method_accessor(true).build.not!(:metodo))
 cacheAspecto.add_behaviour(:before, lambda {|metodo, *args| if metodo.receiver.algo == 5; metodo.receiver.otro=75; raise "error";  end})
 cacheAspecto.add_behaviour(:on_error,lambda{|met, e|  met.receiver.otro })
 
+
 a=Foo2.new
-p a.algo=(5)
+a.algo=(6)
+p a.heavy
+a.algo=(5)
+p a.heavy
+a.algo=(55)
 p a.heavy
 
