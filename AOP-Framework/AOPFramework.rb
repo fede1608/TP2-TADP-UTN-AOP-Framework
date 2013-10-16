@@ -89,6 +89,57 @@ class Pointcut_Builder
     p
   end
 
+  def seCumple?(metodo)
+    if !@options[:class_array].nil?
+      return false unless @options[:class_array].include?(metodo.owner)
+    elsif !@options[:class_hierarchy].nil?
+      return false unless @options[:class_hierarchy].ancestors.include?(metodo.owner)
+    elsif !@options[:class_childs].nil?
+      return false unless metodo.owner.superclass == @options[:class_childs]
+    end
+
+    if !@options[:class_block].nil?
+      return false unless @options[:class_block].call(metodo.owner)
+    end
+    if !@options[:class_regex].nil?
+      return false unless metodo.owner.name.to_s =~ @options[:class_regex]
+    end
+    if !@options[:class_start_with].nil?
+      return false unless metodo.owner.name.to_s.start_with?(@options[:class_start_with])
+    end
+
+    if !@options[:method_array].nil?
+      return false unless (@options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s))
+    end
+    if @options[:method_accessor]
+      return false unless (metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )
+    end
+    if !@options[:method_parameter_name].nil?
+       #should be implemented
+    end
+    if !@options[:method_parameters_type]==:all
+      case @options[:method_parameters_type]
+        when :opt
+          #should be implemented
+        when :req
+          #should be implemented
+      end
+    end
+    if !@options[:method_block].nil?
+      return false unless @options[:method_block].call(metodo)
+    end
+    if !@options[:method_regex].nil?
+      return false unless metodo.name.to_s =~ @options[:method_regex]
+    end
+    if !@options[:method_start_with].nil?
+      return false unless metodo.name.to_s.start_with?(@options[:method_start_with])
+    end
+    if !@options[:method_arity].nil?
+       return false unless metodo.arity==@options[:method_arity]
+    end
+    return true
+  end
+
   def class_array (val)
     @options[:class_array]=val
     self
@@ -164,34 +215,47 @@ class Pointcut
   end
 
   def and!(otroPC)
-    @clases.select!{|clase| otroPC.clases.include?(clase) }
-    @metodos.select!{|met| otroPC.metodos.map{|met| met.inspect}.include?(met.inspect)}
-    self
+    pc_and=Pointcut_and.new
+    pc_and.clases=(@clases.select{|clase| otroPC.clases.include?(clase) })
+    pc_and.metodos=(@metodos.select{|met| otroPC.metodos.map{|met| met.inspect}.include?(met.inspect)})
+    pc_and.pointcuts_and1=(self)
+    pc_and.pointcuts_and2=(otroPC)
+    pc_and
   end
 
   def or!(otroPC)
-    (@clases << otroPC.clases).flatten!.uniq!
-    otroPC.metodos.each{|met| @metodos.push(met) if !@metodos.map{|met| met.inspect}.include?(met.inspect)}
-    self
+    pc_or=Pointcut_or.new
+    pc_or.clases=(@clases)
+    (pc_or.clases << otroPC.clases).flatten!.uniq!
+    pc_or.metodos=(@metodos)
+    otroPC.metodos.each{|met| pc_or.metodos.push(met) if !pc_or.metodos.map{|met| met.inspect}.include?(met.inspect)}
+    pc_or.pointcuts_or1=(self)
+    pc_or.pointcuts_or2=(otroPC)
+    pc_or
   end
 
-  def not!(tipo)
-    case tipo
-      when :metodo
-        metodos_obj = []
-        @clases.each  do |klass|
-          metodos_obj << klass.instance_methods(false).map{|met| klass.instance_method(met)}
-        end
-        @metodos = metodos_obj.flatten.select{|met| !@metodos.map{|met| met.inspect}.include?(met.inspect)}
-      when :clase
-        @clases = Object.subclasses.select{|clase| !@clases.include?(clase)}
-        @metodos = []
-        @clases.each  do |klass|
-          @metodos << klass.instance_methods(false).map{|met| klass.instance_method(met)}
-        end
-        @metodos.flatten!
+  def not!
+    pc_not=Pointcut_not.new
+
+    metodos_obj = []
+    @clases.each  do |klass|
+      metodos_obj << klass.instance_methods(false).map{|met| klass.instance_method(met)}
     end
-    self
+    pc_not.metodos=(metodos_obj.flatten.select{|met| !@metodos.map{|met| met.inspect}.include?(met.inspect)})
+
+    clases_aux = Object.subclasses.select{|clase| !@clases.include?(clase)}
+    metodos_cls = []
+    clases_aux.each  do |klass|
+          metodos_cls << klass.instance_methods(false).map{|met| klass.instance_method(met)}
+    end
+    (pc_not.metodos << metodos_cls.flatten!).flatten!
+
+    pc_not.metodos.each do |metodo|
+      pc_not.clases.push(metodo.owner)
+    end
+    pc_not.clases.uniq!
+    pc_not.pointcut_not=(self)
+    pc_not
   end
 
 end
@@ -200,7 +264,7 @@ class Pointcut_and < Pointcut
   attr_accessor :pointcuts_and1,:pointcuts_and2
 
   def initialize
-    super.initialize
+    super
     @pointcuts_and1=nil
     @pointcuts_and2=nil
   end
@@ -215,7 +279,7 @@ class Pointcut_or < Pointcut
   attr_accessor :pointcuts_or1,:pointcuts_or2
 
   def initialize
-    super.initialize
+    super
     @pointcuts_or1=nil
     @pointcuts_or2=nil
   end
@@ -229,7 +293,7 @@ class Pointcut_not < Pointcut
   attr_accessor :pointcut_not
 
   def initialize
-    super.initialize
+    super
     @pointcuts_or=nil
   end
 

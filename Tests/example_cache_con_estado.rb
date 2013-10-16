@@ -18,7 +18,7 @@ end
 cacheAspecto=Aspect.new
 cacheAspecto.pointcut=(cacheAspecto.builder.class_array([Foo2,Bar2]).build)
 cacheAspecto.logging
-cacheAspecto.pointcut.and!(cacheAspecto.builder.class_array([Foo2,Bar2]).method_accessor(true).build.not!(:metodo))
+cacheAspecto.pointcut=(cacheAspecto.pointcut.and!(Pointcut_Builder.new.class_array([Foo2,Bar2]).method_accessor(true).build.not!))
 cacheAspecto.add_behaviour(:before, lambda do |metodo, *args|
   p metodo.receiver.instance_variable_get("@cache_res_hash")
   if !metodo.receiver.instance_variable_get("@cache_res_hash")[metodo.name].nil? and !metodo.receiver.instance_variable_get("@cache_res_hash")[metodo.name][args].nil?
