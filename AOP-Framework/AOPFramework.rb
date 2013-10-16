@@ -85,7 +85,7 @@ class Pointcut_Builder
     if !@options[:method_arity].nil?
       p.metodos.select!{|metodo| metodo.arity==@options[:method_arity] }
     end
-
+    p.builder=(self.clone)
     p
   end
 
@@ -151,11 +151,16 @@ class Pointcut_Builder
 end
 
 class Pointcut
-  attr_accessor :clases,:metodos
+  attr_accessor :clases,:metodos,:builder
 
   def initialize
     @clases=[]
     @metodos=[]
+    @builder=nil
+  end
+
+  def seCumple?(metodo)
+    @builder.seCumple?(metodo)
   end
 
   def and!(otroPC)
@@ -189,6 +194,48 @@ class Pointcut
     self
   end
 
+end
+
+class Pointcut_and < Pointcut
+  attr_accessor :pointcuts_and1,:pointcuts_and2
+
+  def initialize
+    super.initialize
+    @pointcuts_and1=nil
+    @pointcuts_and2=nil
+  end
+
+  def seCumple?(metodo)
+    @pointcuts_and1.seCumple? && @pointcuts_and2.seCumple?
+  end
+
+end
+
+class Pointcut_or < Pointcut
+  attr_accessor :pointcuts_or1,:pointcuts_or2
+
+  def initialize
+    super.initialize
+    @pointcuts_or1=nil
+    @pointcuts_or2=nil
+  end
+
+  def seCumple?(metodo)
+    @pointcuts_or1.seCumple? || @pointcuts_or2.seCumple?
+  end
+end
+
+class Pointcut_not < Pointcut
+  attr_accessor :pointcut_not
+
+  def initialize
+    super.initialize
+    @pointcuts_or=nil
+  end
+
+  def seCumple?(metodo)
+    !@pointcuts_or.seCumple?
+  end
 end
 
 module Aspect_examples
@@ -299,7 +346,7 @@ class Class
   def attr_writers
     @attr_writers ||= [ ]
   end
-
+  Class
   alias_method :attr_accessor_without_tracking, :attr_accessor
   def attr_accessor(*names)
     attr_readers.concat(names)

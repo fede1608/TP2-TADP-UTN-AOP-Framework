@@ -51,22 +51,11 @@ a.instance_variable_set("@cache_res_hash",Hash[])
 
 p a.heavy(3)
 p a.heavy(4)
-p a.heavy(3)
-
 p a.heavy2(3,6)
 p a.heavy2(3,8)
 p a.heavy2(3,6)
 p a.heavy(3)
 
-
-#p b=Hash[ [2,3,7] => 6 , [1,2,3] => 7]
-#b[[1,2,5]] = 9
-#p b
-# b.each do |key,val|
-#
-#  if key == [2,3,7]
-#    p val
-#  end
-#end
-#
-#p b[[1,2,4]].nil?
+a.algo =(5)
+a.otro =(7)
+p a.inspect
