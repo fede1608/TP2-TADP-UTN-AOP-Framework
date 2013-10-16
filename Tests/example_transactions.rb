@@ -28,7 +28,7 @@ transactionAspectAccessors.add_behaviour(:instead,lambda do |metodo,orig_method,
 end)
 
 transaction_Aspect_Commit_Rollback=Aspect.new
-transaction_Aspect_Commit_Rollback.pointcut=(transactionAspectAccessors.builder.method_accessor(true).build.not!)
+transaction_Aspect_Commit_Rollback.pointcut=(transactionAspectAccessors.builder.method_accessor(true).build.not)
 transaction_Aspect_Commit_Rollback.add_behaviour(:after, lambda do |metodo, res|
   if @undo_self.nil?
     @undo_self= metodo.receiver.clone
