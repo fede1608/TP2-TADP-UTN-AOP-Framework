@@ -250,7 +250,7 @@ class Pointcut
     clases_aux.each  do |klass|
           metodos_cls << klass.instance_methods(false).map{|met| klass.instance_method(met)}.select{|m| !m.name.to_s.start_with?('aopF_')}
     end
-    (pc_not.metodos << metodos_cls.flatten!).flatten!
+    (pc_not.metodos << metodos_cls.flatten.compact).flatten!
 
     pc_not.metodos.each do |metodo|
       pc_not.clases.push(metodo.owner)
@@ -296,11 +296,11 @@ class Pointcut_not < Pointcut
 
   def initialize
     super
-    @pointcuts_or=nil
+    @pointcut_not=nil
   end
 
   def seCumple?(metodo)
-    !@pointcuts_or.seCumple?
+    !@pointcut_not.seCumple?
   end
 end
 
@@ -356,7 +356,7 @@ class Aspect
         when :instead
           metodo.owner.class_eval do
             define_method new_sym do |*arguments|
-              behaviour.call(self.method(metodo.name),res)
+              behaviour.call(self.method(metodo.name),self.method(old_sym),*arguments)
             end
           end
         when :on_error
