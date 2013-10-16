@@ -54,7 +54,7 @@ class Pointcut_Builder
       p.clases.select!{|clase| clase.name.to_s.start_with?(@options[:class_start_with])}
     end
     p.clases.each do |klass|
-      p.metodos << klass.instance_methods(false).map{|met| klass.instance_method(met)}
+      p.metodos << klass.instance_methods(false).map{|met| klass.instance_method(met)}.select{|m| !m.name.to_s.start_with?('aopF_')}
     end
     p.metodos.flatten!
 
@@ -90,6 +90,8 @@ class Pointcut_Builder
   end
 
   def seCumple?(metodo)
+    return false if metodo.name.to_s.start_with?('aopF_')
+
     if !@options[:class_array].nil?
       return false unless @options[:class_array].include?(metodo.owner)
     elsif !@options[:class_hierarchy].nil?
@@ -246,7 +248,7 @@ class Pointcut
     clases_aux = Object.subclasses.select{|clase| !@clases.include?(clase)}
     metodos_cls = []
     clases_aux.each  do |klass|
-          metodos_cls << klass.instance_methods(false).map{|met| klass.instance_method(met)}
+          metodos_cls << klass.instance_methods(false).map{|met| klass.instance_method(met)}.select{|m| !m.name.to_s.start_with?('aopF_')}
     end
     (pc_not.metodos << metodos_cls.flatten!).flatten!
 
@@ -330,7 +332,7 @@ class Aspect
 
   def add_behaviour(where,behaviour)
     @pointcut.metodos.each do |metodo|
-      old_sym = ((0...8).map { (65 + rand(26)).chr }.join + "__#{metodo.name.to_s}" ).to_sym
+      old_sym = ('aopF_' + (0...8).map { (65 + rand(26)).chr }.join + "_#{metodo.name.to_s}" ).to_sym
       new_sym=  metodo.name
       puts "Se modifico el metodo: #{new_sym.to_s} de la Clase: #{metodo.owner.to_s}"
       #metodo.owner.class_eval("def #{metodo.name.to_s}(*args); puts 'Se Sobreescribio #{metodo.name.to_s}';end #self.orig_#{metodo.name.to_s}(*args);  end")
