@@ -44,12 +44,12 @@ describe 'Point Cuts' do
 
     @aspect=Aspect.new
 
-
+   #hardcodeo para q no interfieran las clases del Rspec
     class Object
       def self.inherited(subclass)
-
       end
     end
+
   end
 
   it 'accessors point cut' do
@@ -71,5 +71,35 @@ describe 'Point Cuts' do
     @aspect.pointcut=(Pointcut_Builder.new.method_arity(1).build)
     @aspect.pointcut.metodos.map{|m| m.name}.should include(:tomastee,:other,:joe=,:lara=,:mar=)
     @aspect.pointcut.should have(5).metodos
+  end
+
+  it 'method array point cut' do
+    @aspect.pointcut=(Pointcut_Builder.new.method_array([:multiply]).build)
+    @aspect.pointcut.metodos.map{|m| m.name}.should include(:multiply)
+    @aspect.pointcut.should have(1).metodos
+  end
+
+  it 'class array point cut' do
+    @aspect.pointcut=(Pointcut_Builder.new.class_array([NotFoo]).build)
+    @aspect.pointcut.metodos.map{|m| m.name}.should include(:not_a_Foo_method)
+    @aspect.pointcut.should have(1).metodos
+    @aspect.pointcut.clases.should include(NotFoo)
+    @aspect.pointcut.should have(1).clases
+  end
+
+  it 'class childs point cut' do
+    @aspect.pointcut=(Pointcut_Builder.new.class_childs(Foo).build)
+    @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture,:tomastee,:multiply,:mar,:mar=)
+    @aspect.pointcut.should have(5).metodos
+    @aspect.pointcut.clases.should include(Bar)
+    @aspect.pointcut.should have(1).clases
+  end
+
+  it '' do
+    @aspect.pointcut=(Pointcut_Builder.new..build)
+    @aspect.pointcut.metodos.map{|m| m.name}.should include()
+    @aspect.pointcut.should have().metodos
+    @aspect.pointcut.clases.should include()
+    @aspect.pointcut.should have().clases
   end
 end
