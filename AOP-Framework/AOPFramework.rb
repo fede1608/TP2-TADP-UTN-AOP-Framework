@@ -321,7 +321,7 @@ module Aspect_examples
 end
 
 class Aspect
-  attr_accessor :builder, :pointcut
+  attr_accessor :builder, :pointcut ,:dyn_methods
 
   include Aspect_examples
 
@@ -374,7 +374,8 @@ class Aspect
   def add_behaviour_method(where,behaviour,metodo)
     old_sym = ('aopF_' + (0...8).map { (65 + rand(26)).chr }.join + "_#{metodo.name.to_s}" ).to_sym
     new_sym=  metodo.name
-    puts "Se modifico el metodo: #{new_sym.to_s} de la Clase: #{metodo.owner.to_s}"
+    puts "Se modifico el metodo: #{new_sym.to_s} de la Clase: #{metodo.owner.to_s} "
+    #puts "Exmetodo: #{old_sym.to_s}"
     #metodo.owner.class_eval("def #{metodo.name.to_s}(*args); puts 'Se Sobreescribio #{metodo.name.to_s}';end #self.orig_#{metodo.name.to_s}(*args);  end")
     metodo.owner.class_eval("alias_method :#{old_sym.to_s} , :#{new_sym.to_s}")
     case where

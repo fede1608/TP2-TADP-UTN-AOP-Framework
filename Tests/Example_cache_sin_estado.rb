@@ -16,6 +16,7 @@ class Bar2 < Foo2
 end
 
 cacheAspecto=Aspect.new
+cacheAspecto.dyn_methods=(false)
 cacheAspecto.pointcut=(cacheAspecto.builder.class_array([Foo2,Bar2]).build)
 cacheAspecto.logging
 cacheAspecto.pointcut=(cacheAspecto.pointcut.and(cacheAspecto.builder.class_array([Foo2,Bar2]).method_accessor(true).build.not))
