@@ -19,6 +19,7 @@ end
 
 
 transactionAspectAccessors=Aspect.new
+transactionAspectAccessors.dyn_methods =false
 transactionAspectAccessors.pointcut=(transactionAspectAccessors.builder.method_accessor(true).build)
 transactionAspectAccessors.add_behaviour(:instead,lambda do |metodo,orig_method,*args|
   if @undo_self.nil?
@@ -28,6 +29,7 @@ transactionAspectAccessors.add_behaviour(:instead,lambda do |metodo,orig_method,
 end)
 
 transaction_Aspect_Commit_Rollback=Aspect.new
+transaction_Aspect_Commit_Rollback.dyn_methods =false
 transaction_Aspect_Commit_Rollback.pointcut=(transactionAspectAccessors.builder.method_accessor(true).build.not)
 transaction_Aspect_Commit_Rollback.add_behaviour(:after, lambda do |metodo, res|
   if @undo_self.nil?

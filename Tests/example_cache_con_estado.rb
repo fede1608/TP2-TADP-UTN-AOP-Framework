@@ -16,7 +16,7 @@ class Bar2 < Foo2
 end
 
 cacheAspecto=Aspect.new
-cacheAspecto.dyn_methods =false
+#cacheAspecto.dyn_methods =false
 cacheAspecto.pointcut=(cacheAspecto.builder.class_array([Foo2,Bar2]).build)
 cacheAspecto.pointcut=(cacheAspecto.pointcut.and(Pointcut_Builder.new.class_array([Foo2,Bar2]).method_accessor(true).build.not))
 cacheAspecto.add_behaviour(:before, lambda do |metodo, *args|

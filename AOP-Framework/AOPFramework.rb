@@ -272,7 +272,7 @@ class Pointcut_and < Pointcut
   end
 
   def seCumple?(metodo)
-    @pointcuts_and1.seCumple? && @pointcuts_and2.seCumple?
+    @pointcuts_and1.seCumple?(metodo) && @pointcuts_and2.seCumple?(metodo)
   end
 
 end
@@ -287,7 +287,7 @@ class Pointcut_or < Pointcut
   end
 
   def seCumple?(metodo)
-    @pointcuts_or1.seCumple? || @pointcuts_or2.seCumple?
+    @pointcuts_or1.seCumple?(metodo) || @pointcuts_or2.seCumple?(metodo)
   end
 end
 
@@ -300,7 +300,7 @@ class Pointcut_not < Pointcut
   end
 
   def seCumple?(metodo)
-    !@pointcut_not.seCumple?
+    !@pointcut_not.seCumple?(metodo)
   end
 end
 
@@ -363,6 +363,7 @@ class Aspect
     @pointcut.clases.each do |clase|
       clase.class_eval do
         define_singleton_method :method_added do |method_name|
+
            if aspect.pointcut.seCumple?(clase.instance_method(method_name))
              aspect.apply_behaviours(clase.instance_method(method_name))
            end

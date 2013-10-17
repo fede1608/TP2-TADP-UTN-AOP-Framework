@@ -15,12 +15,13 @@ class Foo3
   end
 end
 class Bar3 < Foo3
-  attr_accessor :algo3,:otro3
+  attr_accessor :algo3,:otro3,:dyn_not
 end
 
 aspect=Aspect.new
-aspect.pointcut =(Pointcut_Builder.new.method_accessor(true).build)
+aspect.pointcut =(Pointcut_Builder.new.method_accessor(true).build.and(Pointcut_Builder.new.method_start_with("dyn").build))
 aspect.logging
+
 
 foo=Foo3.new
 foo.algo=(5)
