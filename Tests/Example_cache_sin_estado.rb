@@ -3,6 +3,9 @@ require_relative '../AOP-Framework/AOPFramework'
 class Foo2
   attr_accessor :algo,:otro
 
+  def heavy0
+    0
+  end
   def heavy(number)
     p "metodo original"
     number*3
@@ -18,9 +21,11 @@ end
 cacheAspecto=Aspect.new
 #cacheAspecto.dyn_methods=(false)
 cacheAspecto.pointcut=(cacheAspecto.builder.class_array([Foo2,Bar2]).build)
-cacheAspecto.logging
 cacheAspecto.pointcut=(cacheAspecto.pointcut.and(cacheAspecto.builder.class_array([Foo2,Bar2]).method_accessor(true).build.not))
 cacheAspecto.add_behaviour(:before, lambda do |metodo, *args|
+  if metodo.receiver.instance_variable_get("@cache_res_hash").nil?
+    metodo.receiver.instance_variable_set("@cache_res_hash",Hash[])
+  end
   p metodo.receiver.instance_variable_get("@cache_res_hash")
   if !metodo.receiver.instance_variable_get("@cache_res_hash")[metodo.name].nil? and !metodo.receiver.instance_variable_get("@cache_res_hash")[metodo.name][args].nil?
     metodo.receiver.instance_variable_set("@cache_res",metodo.receiver.instance_variable_get("@cache_res_hash")[metodo.name][args])
@@ -44,10 +49,10 @@ cacheAspecto.add_behaviour(:on_error,lambda do |metodo, e|
   p "metodo cacheado"
   metodo.receiver.instance_variable_get("@cache_res")
 end)
-
-
+cacheAspecto.pointcut=(Pointcut_Builder.new.class_array([Foo2,Bar2]).build)
+cacheAspecto.logging
 a=Foo2.new
-a.instance_variable_set("@cache_res_hash",Hash[])
+
 
 
 p a.heavy(3)
@@ -59,6 +64,8 @@ p a.heavy2(3,8)
 p a.heavy2(3,6)
 p a.heavy(3)
 
+p a.heavy0
+p a.heavy0
 
 #p b=Hash[ [2,3,7] => 6 , [1,2,3] => 7]
 #b[[1,2,5]] = 9
