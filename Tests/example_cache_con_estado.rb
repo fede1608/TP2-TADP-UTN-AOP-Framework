@@ -9,7 +9,7 @@ class Foo2
   end
   def heavy2(number,number2)
     p "metodo original"
-    number*number2
+    number*number2*@otro
   end
 end
 class Bar2 < Foo2
@@ -25,7 +25,7 @@ cacheAspecto.add_behaviour(:before, lambda do |metodo, *args|
   metodo.receiver.instance_variables.each do |sym|
     state[sym]=metodo.receiver.instance_variable_get(sym) unless sym.to_s.start_with?("@cache")
   end
-  argument=Hash[:args=>metodo.receiver.instance_variable_get("@cache_args"), :state=>state]
+  argument=Hash[:args=>args, :state=>state]
   p argument
   if !metodo.receiver.instance_variable_get("@cache_res_hash")[metodo.name].nil? and !metodo.receiver.instance_variable_get("@cache_res_hash")[metodo.name][argument].nil?
     metodo.receiver.instance_variable_set("@cache_res",metodo.receiver.instance_variable_get("@cache_res_hash")[metodo.name][argument])
@@ -73,6 +73,17 @@ a.algo =(5)
 a.algo =(6)
  a.heavy(3)
 
+
+a.otro=(3)
+a.heavy2(3,3)
+a.heavy2(3,3)
+a.otro=(4)
+a.heavy2(3,3)
+a.heavy2(3,3)
+a.heavy2(4,5)
+a.otro=(0)
+a.heavy2(4,5)
+a.heavy2(4,5)
 #
 #p a.heavy(4)
 #p a.heavy2(3,6)
