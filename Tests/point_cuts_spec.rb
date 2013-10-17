@@ -6,6 +6,7 @@ describe 'Point Cuts' do
 
   before :each do
     require_relative '../AOP-Framework/AOPFramework'
+
     class Foo
       attr_accessor :joe,:lara
 
@@ -44,16 +45,24 @@ describe 'Point Cuts' do
 
     @aspect=Aspect.new
 
-   #hardcodeo para q no interfieran las clases del Rspec
-    class Object
-      def self.inherited(subclass)
-      end
-    end
+   ##hardcodeo para q no interfieran las clases del Rspec
+   # class Object
+    #   def self.inherited(subclass)
+    #   end
+    # end
 
   end
 
+  it 'class array point cut' do
+    @aspect.pointcut=(Pointcut_Builder.new.class_array([NotFoo]).build)
+    @aspect.pointcut.metodos.map{|m| m.name}.should include(:not_a_Foo_method)
+    @aspect.pointcut.should have(1).metodos
+    @aspect.pointcut.clases.should include(NotFoo)
+    @aspect.pointcut.should have(1).clases
+  end
+
   it 'accessors point cut' do
-    @aspect.pointcut =(Pointcut_Builder.new.method_accessor(true).build)
+    @aspect.pointcut =(Pointcut_Builder.new.class_array([Foo,Bar]).method_accessor(true).build)
     @aspect.pointcut.metodos.map{|m| m.name}.should include(:joe,:lara,:mar,:joe=,:lara=,:mar=)
     @aspect.pointcut.should have(6).metodos
   end
@@ -68,7 +77,7 @@ describe 'Point Cuts' do
   end
 
   it 'method arity point cut' do
-    @aspect.pointcut=(Pointcut_Builder.new.method_arity(1).build)
+    @aspect.pointcut=(Pointcut_Builder.new.class_array([Foo,Bar]).method_arity(1).build)
     @aspect.pointcut.metodos.map{|m| m.name}.should include(:tomastee,:other,:joe=,:lara=,:mar=)
     @aspect.pointcut.should have(5).metodos
   end
@@ -77,14 +86,6 @@ describe 'Point Cuts' do
     @aspect.pointcut=(Pointcut_Builder.new.method_array([:multiply]).build)
     @aspect.pointcut.metodos.map{|m| m.name}.should include(:multiply)
     @aspect.pointcut.should have(1).metodos
-  end
-
-  it 'class array point cut' do
-    @aspect.pointcut=(Pointcut_Builder.new.class_array([NotFoo]).build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(:not_a_Foo_method)
-    @aspect.pointcut.should have(1).metodos
-    @aspect.pointcut.clases.should include(NotFoo)
-    @aspect.pointcut.should have(1).clases
   end
 
   it 'class childs point cut' do
