@@ -363,7 +363,6 @@ class Aspect
     @pointcut.clases.each do |clase|
       clase.class_eval do
         define_singleton_method :method_added do |method_name|
-
            if aspect.pointcut.seCumple?(clase.instance_method(method_name))
              aspect.apply_behaviours(clase.instance_method(method_name))
            end

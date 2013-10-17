@@ -83,7 +83,7 @@ describe 'Point Cuts' do
   end
 
   it 'method array point cut' do
-    @aspect.pointcut=(Pointcut_Builder.new.method_array([:multiply]).build)
+    @aspect.pointcut=(Pointcut_Builder.new.class_array([Foo,Bar]).method_array([:multiply]).build)
     @aspect.pointcut.metodos.map{|m| m.name}.should include(:multiply)
     @aspect.pointcut.should have(1).metodos
   end
