@@ -14,7 +14,7 @@ class Pointcut_Builder
     @options[:method_array] = nil
     @options[:method_accessor] = nil
     @options[:method_parameter_name] = nil
-    @options[:method_parameters_type] = :all
+    @options[:method_parameters_type] = nil
     @options[:method_block] = nil
     @options[:method_regex] = nil
     @options[:method_start_with] = nil
@@ -54,12 +54,11 @@ class Pointcut_Builder
       p.clases.select!{|clase| clase.name.to_s.start_with?(@options[:class_start_with])}
     end
     p.clases.each do |klass|
-      p.metodos << klass.instance_methods(false).map{|met| klass.instance_method(met)}.select{|m| !m.name.to_s.start_with?('aopF_')}
+      p.metodos << klass.instance_methods(false).select{|m| !m.to_s.start_with?('aopF_')}.map{|met| klass.instance_method(met)}.select{|m| !m.name.to_s.start_with?('aopF_')}
     end
     p.metodos.flatten!
-
     if !@options[:method_array].nil?
-      p.metodos.select!{|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
+      p.metodos{|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
     end
     if !@options[:method_accessor].nil?
       p.metodos.select!{|m| m.owner.attr_readers.include?(m.name) || m.owner.attr_writers.include?(m.name) } if @options[:method_accessor]
@@ -68,10 +67,16 @@ class Pointcut_Builder
     if !@options[:method_parameter_name].nil?
       p.metodos.select!{|m| m.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]}}
     end
-    if !@options[:method_parameters_type]==:all
+    if !@options[:method_parameters_type].nil?
       case @options[:method_parameters_type]
-        when :opt
-        when :req
+        when :opt,:req
+          p.metodos.select!{|m| m.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s}}
+      #  when :req
+      #    p.metodos.select!{|m| m.parameters.map(&:first).any?{|p| p==@options[:method_parameters_type]}&& m.arity!=0}
+        when :req_all
+          p.metodos.select!{|m| m.parameters.map(&:first).all?{|p| p.to_s== :req.to_s}}
+        when :opt_all
+          p.metodos.select!{|m| m.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s}}
       end
     end
     if !@options[:method_block].nil?
@@ -124,12 +129,14 @@ class Pointcut_Builder
     if !@options[:method_parameter_name].nil?
        return false unless metodo.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]}
     end
-    if !@options[:method_parameters_type]==:all
+    if !@options[:method_parameters_type].nil?
       case @options[:method_parameters_type]
-        when :opt
-          #should be implemented
-        when :req
-          #should be implemented
+        when :opt,:req
+          return false unless metodo.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s}
+        when :req_all
+          return false unless metodo.parameters.map(&:first).all?{|p| p.to_s== :req.to_s}
+        when :opt_all
+          return false unless metodo.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s}
       end
     end
     if !@options[:method_block].nil?
