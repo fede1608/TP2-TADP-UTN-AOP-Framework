@@ -149,6 +149,7 @@ describe 'Point Cuts' do
     @aspect.pointcut = (Pointcut_Builder.new.class_hierarchy(Fight8).method_arity(1).build)
     @aspect.pointcut.metodos.map{|m| m.name}.should include(:tomastee2,:other,:joe=,:lara=,:sol=)
     @aspect.pointcut.should have(5).metodos
+    @aspect.pointcut.clases.should include(Fight8,Foo8)
     @aspect.pointcut.should have(2).clases
   end
 
@@ -156,6 +157,7 @@ describe 'Point Cuts' do
     @aspect.pointcut = (Pointcut_Builder.new.class_hierarchy(Fight8).method_arity(1).method_accessor(false).build)
     @aspect.pointcut.metodos.map{|m| m.name}.should include(:tomastee2,:other)
     @aspect.pointcut.should have(2).metodos
+    @aspect.pointcut.clases.should include(Fight8,Foo8)
     @aspect.pointcut.should have(2).clases
   end
 
@@ -163,6 +165,7 @@ describe 'Point Cuts' do
     @aspect.pointcut = (Pointcut_Builder.new.class_array([Foo8,Bar8,Fight8]).class_regex(/[ai]/).method_accessor(false).build)
     @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture,:multiply,:tomastee,:moisture2,:tomastee2)
     @aspect.pointcut.should have(5).metodos
+    @aspect.pointcut.clases.should include(Bar8,Fight8)
     @aspect.pointcut.should have(2).clases
   end
 
@@ -170,10 +173,17 @@ describe 'Point Cuts' do
     @aspect.pointcut = (Pointcut_Builder.new.class_array([Foo8,Bar8,Fight8]).class_regex(/[ai]/).method_accessor(false).method_array([:moisture,:moisture2]).build)
     @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture,:moisture2)
     @aspect.pointcut.should have(2).metodos
+    @aspect.pointcut.clases.should include(Bar8,Fight8)
     @aspect.pointcut.should have(2).clases
   end
 
-
+  it 'class array and method regex point cut' do
+    @aspect.pointcut = (Pointcut_Builder.new.class_array([Bar8,Fight8]).method_regex(/ist...2/).build)
+    @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture2)
+    @aspect.pointcut.should have(1).metodos
+    @aspect.pointcut.clases.should include(Bar8,Fight8)
+    @aspect.pointcut.should have(2).clases
+  end
 
   #it '' do
   #  @aspect.pointcut=(Pointcut_Builder.new..build)
