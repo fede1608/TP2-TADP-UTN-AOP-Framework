@@ -52,6 +52,8 @@ aspecto3=Aspect.new
 aspecto3.pointcut =(Pointcut_Builder.new.method_parameter_name("world").build)
 p aspecto3.pointcut.clases
 p aspecto3.pointcut.metodos
+aspecto3.benchmarking
+Hola.new.hello
 
 #example parameter type
 aspecto4=Aspect.new
