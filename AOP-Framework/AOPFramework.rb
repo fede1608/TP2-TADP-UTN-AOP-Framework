@@ -12,7 +12,7 @@ class Pointcut_Builder
     @options[:class_start_with] = nil
 
     @options[:method_array] = nil
-    @options[:method_accessor] = false
+    @options[:method_accessor] = nil
     @options[:method_parameter_name] = nil
     @options[:method_parameters_type] = :all
     @options[:method_block] = nil
