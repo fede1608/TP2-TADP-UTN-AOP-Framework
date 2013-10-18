@@ -230,7 +230,7 @@ class Pointcut
     pc_or.clases=(@clases)
     (pc_or.clases << otroPC.clases).flatten!.uniq!
     pc_or.metodos=(@metodos)
-    otroPC.metodos.each{|met| pc_or.metodos.push(met) if !pc_or.metodos.map{|met| met.inspect}.include?(met.inspect)}
+    otroPC.metodos.each{|met| pc_or.metodos.push(met) if !pc_or.metodos.map{|met| met.inspect}.include?(met.inspect) || !met.name.to_s.start_with?('aopF_')}
     pc_or.pointcuts_or1=(self)
     pc_or.pointcuts_or2=(otroPC)
     pc_or
@@ -241,7 +241,7 @@ class Pointcut
 
     metodos_obj = []
     @clases.each  do |klass|
-      metodos_obj << klass.instance_methods(false).map{|met| klass.instance_method(met)}
+      metodos_obj << klass.instance_methods(false).map{|met| klass.instance_method(met)}.select{|m| !m.name.to_s.start_with?('aopF_')}
     end
     pc_not.metodos=(metodos_obj.flatten.select{|met| !@metodos.map{|met| met.inspect}.include?(met.inspect)})
 
@@ -414,12 +414,6 @@ class Aspect
   end
 
 end
-
-
-
-
-
-
 
 class Object
   @@subclasses = []
