@@ -61,8 +61,9 @@ class Pointcut_Builder
     if !@options[:method_array].nil?
       p.metodos.select!{|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
     end
-    if @options[:method_accessor]
-      p.metodos.select!{|m| m.owner.attr_readers.include?(m.name) || m.owner.attr_writers.include?(m.name) }
+    if !@options[:method_accessor].nil?
+      p.metodos.select!{|m| m.owner.attr_readers.include?(m.name) || m.owner.attr_writers.include?(m.name) } if @options[:method_accessor]
+      p.metodos.select!{|m| !m.owner.attr_readers.include?(m.name) && !m.owner.attr_writers.include?(m.name) } unless @options[:method_accessor]
     end
     if !@options[:method_parameter_name].nil?
 
@@ -113,8 +114,12 @@ class Pointcut_Builder
     if !@options[:method_array].nil?
       return false unless (@options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s))
     end
-    if @options[:method_accessor]
+    if !@options[:method_accessor].nil?
+      if @options[:method_accessor]
       return false unless (metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )
+      else
+      return false if (metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )
+      end
     end
     if !@options[:method_parameter_name].nil?
        #should be implemented
