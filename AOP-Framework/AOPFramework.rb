@@ -230,7 +230,7 @@ class Pointcut
     pc_or.clases=(@clases)
     (pc_or.clases << otroPC.clases).flatten!.uniq!
     pc_or.metodos=(@metodos)
-    otroPC.metodos.each{|met| pc_or.metodos.push(met) if !pc_or.metodos.map{|met| met.inspect}.include?(met.inspect) || !met.name.to_s.start_with?('aopF_')}
+    otroPC.metodos.each{|met| pc_or.metodos.push(met) if !pc_or.metodos.map{|met| met.inspect}.include?(met.inspect) && !met.name.to_s.start_with?('aopF_')}
     pc_or.pointcuts_or1=(self)
     pc_or.pointcuts_or2=(otroPC)
     pc_or
