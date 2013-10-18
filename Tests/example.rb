@@ -29,6 +29,9 @@ class Hola
   def shit
     raise('un error')
   end
+  def hello(world,bye)
+    #example parameter name
+  end
 end
 class Chau < Hola
 end
@@ -40,5 +43,11 @@ a=Hola.new
 a.otro=(7)
 a.shit
 p a.otro
+p a.method(:hello).parameters.map(&:last).map(&:to_s)
 
+#example parameter name
+aspecto3=Aspect.new
+aspecto3.pointcut =(Pointcut_Builder.new.method_parameter_name("world").build)
+p aspecto3.pointcut.clases
+p aspecto3.pointcut.metodos
 

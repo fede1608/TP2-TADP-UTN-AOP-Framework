@@ -66,7 +66,7 @@ class Pointcut_Builder
       p.metodos.select!{|m| !m.owner.attr_readers.include?(m.name) && !m.owner.attr_writers.include?(m.name) } unless @options[:method_accessor]
     end
     if !@options[:method_parameter_name].nil?
-
+      p.metodos.select!{|m| m.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]}}
     end
     if !@options[:method_parameters_type]==:all
       case @options[:method_parameters_type]
@@ -122,7 +122,7 @@ class Pointcut_Builder
       end
     end
     if !@options[:method_parameter_name].nil?
-       #should be implemented
+       return false unless metodo.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]}
     end
     if !@options[:method_parameters_type]==:all
       case @options[:method_parameters_type]
