@@ -58,7 +58,7 @@ class Pointcut_Builder
     end
     p.metodos.flatten!
     if !@options[:method_array].nil?
-      p.metodos{|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
+      p.metodos.select!{|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
     end
     if !@options[:method_accessor].nil?
       p.metodos.select!{|m| m.owner.attr_readers.include?(m.name) || m.owner.attr_writers.include?(m.name) } if @options[:method_accessor]
