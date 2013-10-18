@@ -43,6 +43,47 @@ describe 'Point Cuts' do
       end
     end
 
+    class Foo2
+      attr_accessor :joe,:lara
+
+      def another
+      end
+
+      def other(sth)
+      end
+
+      def not_true
+      end
+
+      def not_false
+      end
+
+    end
+
+    class Bar2 < Foo2
+      attr_accessor :mar
+
+      def moisture
+      end
+
+      def tomastee(colon)
+      end
+
+      def multiply(a,b)
+      end
+    end
+
+    class Fight2 < Foo2
+      attr_accessor :sol
+
+      def moisture2
+      end
+
+      def tomastee2(colon)
+      end
+
+    end
+
     @aspect=Aspect.new
 
    ##hardcodeo para q no interfieran las clases del Rspec
@@ -96,11 +137,19 @@ describe 'Point Cuts' do
     @aspect.pointcut.should have(1).clases
   end
 
-  it '' do
-    @aspect.pointcut=(Pointcut_Builder.new..build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include()
-    @aspect.pointcut.should have().metodos
-    @aspect.pointcut.clases.should include()
-    @aspect.pointcut.should have().clases
+  it 'class childs, class start and method start with point cut' do
+    @aspect.pointcut = (Pointcut_Builder.new.class_childs(Foo2).class_start_with("Fi").method_start_with("mois").build)
+    @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture2)
+    @aspect.pointcut.should have(1).metodos
+    @aspect.pointcut.clases.should include(Fight2)
+    @aspect.pointcut.should have(1).clases
   end
+
+  #it '' do
+  #  @aspect.pointcut=(Pointcut_Builder.new..build)
+  #  @aspect.pointcut.metodos.map{|m| m.name}.should include()
+  #  @aspect.pointcut.should have().metodos
+  #  @aspect.pointcut.clases.should include()
+  #  @aspect.pointcut.should have().clases
+  #end
 end
