@@ -159,9 +159,21 @@ describe 'Point Cuts' do
     @aspect.pointcut.should have(2).clases
   end
 
-  #it 'blablabla' do
-  #  @aspect.pointcut = (Pointcut_Builder.new.class_childs(Foo8).class_block())
-  #end
+  it 'class array, class regex and method accessor point cut' do
+    @aspect.pointcut = (Pointcut_Builder.new.class_array([Foo8,Bar8,Fight8]).class_regex(/[ai]/).method_accessor(false).build)
+    @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture,:multiply,:tomastee,:moisture2,:tomastee2)
+    @aspect.pointcut.should have(5).metodos
+    @aspect.pointcut.should have(2).clases
+  end
+
+  it 'class array, class regex, method accessor and method array point cut' do
+    @aspect.pointcut = (Pointcut_Builder.new.class_array([Foo8,Bar8,Fight8]).class_regex(/[ai]/).method_accessor(false).method_array([:moisture,:moisture2]).build)
+    @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture,:moisture2)
+    @aspect.pointcut.should have(2).metodos
+    @aspect.pointcut.should have(2).clases
+  end
+
+
 
   #it '' do
   #  @aspect.pointcut=(Pointcut_Builder.new..build)
