@@ -43,7 +43,7 @@ describe 'Point Cuts' do
       end
     end
 
-    class Foo2
+    class Foo8
       attr_accessor :joe,:lara
 
       def another
@@ -60,7 +60,7 @@ describe 'Point Cuts' do
 
     end
 
-    class Bar2 < Foo2
+    class Bar8 < Foo8
       attr_accessor :mar
 
       def moisture
@@ -73,7 +73,7 @@ describe 'Point Cuts' do
       end
     end
 
-    class Fight2 < Foo2
+    class Fight8 < Foo8
       attr_accessor :sol
 
       def moisture2
@@ -138,12 +138,30 @@ describe 'Point Cuts' do
   end
 
   it 'class childs, class start and method start with point cut' do
-    @aspect.pointcut = (Pointcut_Builder.new.class_childs(Foo2).class_start_with("Fi").method_start_with("mois").build)
+    @aspect.pointcut = (Pointcut_Builder.new.class_childs(Foo8).class_start_with("Fi").method_start_with("mois").build)
     @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture2)
     @aspect.pointcut.should have(1).metodos
-    @aspect.pointcut.clases.should include(Fight2)
+    @aspect.pointcut.clases.should include(Fight8)
     @aspect.pointcut.should have(1).clases
   end
+
+  it 'class hierarchy and method_arity point cut' do
+    @aspect.pointcut = (Pointcut_Builder.new.class_hierarchy(Fight8).method_arity(1).build)
+    @aspect.pointcut.metodos.map{|m| m.name}.should include(:tomastee2,:other,:joe=,:lara=,:sol=)
+    @aspect.pointcut.should have(5).metodos
+    @aspect.pointcut.should have(2).clases
+  end
+
+  it 'class hierarchy, method_arity and method accessors point cut' do
+    @aspect.pointcut = (Pointcut_Builder.new.class_hierarchy(Fight8).method_arity(1).method_accessor(false).build)
+    @aspect.pointcut.metodos.map{|m| m.name}.should include(:tomastee2,:other)
+    @aspect.pointcut.should have(2).metodos
+    @aspect.pointcut.should have(2).clases
+  end
+
+  #it 'blablabla' do
+  #  @aspect.pointcut = (Pointcut_Builder.new.class_childs(Foo8).class_block())
+  #end
 
   #it '' do
   #  @aspect.pointcut=(Pointcut_Builder.new..build)
