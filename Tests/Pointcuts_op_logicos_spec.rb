@@ -100,7 +100,8 @@ describe 'Operar logicamente con PointCuts' do
     pc1=(Pointcut_Builder.new.class_array([Foo7,Bar7,NotFoo7]).method_accessor(true).build)
     pc1.metodos.map{|m| m.name}.should include(:joe,:lara,:mar,:joe=,:lara=,:mar=)
     pc1.should have(6).metodos
-    pointcut_and_not =(pc1.not.and(Pointcut_Builder.new.class_array([Foo7,Bar7,NotFoo7]).build))
+    pc2= Pointcut_Builder.new.class_array([Foo7,Bar7,NotFoo7]).build
+    pointcut_and_not= (pc1.!) & pc2
     pointcut_and_not.metodos.map{|m| m.name}.should include(:tomastee,:other,:not_true,:not_false,:not_a_Foo_method,:another,:moisture,:multiply)
     pointcut_and_not.metodos.map{|m| m.name}.should_not include(:joe,:lara,:mar,:joe=,:lara=,:mar=)
     pointcut_and_not.should have(8).metodos
