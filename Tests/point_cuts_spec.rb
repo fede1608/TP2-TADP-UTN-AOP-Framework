@@ -1,12 +1,13 @@
 require 'rspec'
 
+require_relative '../AOP-Framework/pointcut_builder'
+require_relative '../AOP-Framework/pointcut_core'
+require_relative '../AOP-Framework/object_class_custom'
 
 
 describe 'Point Cuts' do
 
   before :each do
-    require_relative '../AOP-Framework/AOPFramework'
-
     class Foo
       attr_accessor :joe,:lara
 
@@ -84,7 +85,7 @@ describe 'Point Cuts' do
 
     end
 
-    @aspect=Aspect.new
+
 
    ##hardcodeo para q no interfieran las clases del Rspec
    # class Object
@@ -100,104 +101,105 @@ describe 'Point Cuts' do
     Object.send :remove_const, :Bar
     Object.send :remove_const, :Bar8
     Object.send :remove_const, :NotFoo
+    Object.subclasses.clear
   end
 
   it 'class array point cut' do
-    @aspect.pointcut=(Pointcut_Builder.new.class_array([NotFoo]).build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(:not_a_Foo_method)
-    @aspect.pointcut.should have(1).metodos
-    @aspect.pointcut.clases.should include(NotFoo)
-    @aspect.pointcut.should have(1).clases
+    pointcut=(Pointcut_Builder.new.class_array([NotFoo]).build)
+    pointcut.metodos.map{|m| m.name}.should include(:not_a_Foo_method)
+    pointcut.should have(1).metodos
+    pointcut.clases.should include(NotFoo)
+    pointcut.should have(1).clases
   end
 
   it 'accessors point cut' do
-    @aspect.pointcut =(Pointcut_Builder.new.class_array([Foo,Bar]).method_accessor(true).build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(:joe,:lara,:mar,:joe=,:lara=,:mar=)
-    @aspect.pointcut.should have(6).metodos
+    pointcut =(Pointcut_Builder.new.class_array([Foo,Bar]).method_accessor(true).build)
+    pointcut.metodos.map{|m| m.name}.should include(:joe,:lara,:mar,:joe=,:lara=,:mar=)
+    pointcut.should have(6).metodos
   end
 
   it 'class hierarchy point cut' do
-    @aspect.pointcut =(Pointcut_Builder.new.class_hierarchy(Bar).build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(*Foo.instance_methods(false))
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(*Bar.instance_methods(false))
-    @aspect.pointcut.should have(13).metodos
-    @aspect.pointcut.clases.should include(Foo,Bar)
-    @aspect.pointcut.should have(2).clases
+    pointcut =(Pointcut_Builder.new.class_hierarchy(Bar).build)
+    pointcut.metodos.map{|m| m.name}.should include(*Foo.instance_methods(false))
+    pointcut.metodos.map{|m| m.name}.should include(*Bar.instance_methods(false))
+    pointcut.should have(13).metodos
+    pointcut.clases.should include(Foo,Bar)
+    pointcut.should have(2).clases
   end
 
   it 'method arity point cut' do
-    @aspect.pointcut=(Pointcut_Builder.new.class_array([Foo,Bar]).method_arity(1).build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(:tomastee,:other,:joe=,:lara=,:mar=)
-    @aspect.pointcut.should have(5).metodos
+    pointcut=(Pointcut_Builder.new.class_array([Foo,Bar]).method_arity(1).build)
+    pointcut.metodos.map{|m| m.name}.should include(:tomastee,:other,:joe=,:lara=,:mar=)
+    pointcut.should have(5).metodos
   end
 
   it 'method array point cut' do
-    @aspect.pointcut=(Pointcut_Builder.new.class_array([Foo,Bar]).method_array([:multiply]).build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(:multiply)
-    @aspect.pointcut.should have(1).metodos
+    pointcut=(Pointcut_Builder.new.class_array([Foo,Bar]).method_array([:multiply]).build)
+    pointcut.metodos.map{|m| m.name}.should include(:multiply)
+    pointcut.should have(1).metodos
   end
 
   it 'class childs point cut' do
-    @aspect.pointcut=(Pointcut_Builder.new.class_childs(Foo).build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture,:tomastee,:multiply,:mar,:mar=)
-    @aspect.pointcut.should have(5).metodos
-    @aspect.pointcut.clases.should include(Bar)
-    @aspect.pointcut.should have(1).clases
+    pointcut=(Pointcut_Builder.new.class_childs(Foo).build)
+    pointcut.metodos.map{|m| m.name}.should include(:moisture,:tomastee,:multiply,:mar,:mar=)
+    pointcut.should have(5).metodos
+    pointcut.clases.should include(Bar)
+    pointcut.should have(1).clases
   end
 
   it 'class childs, class start and method start with point cut' do
-    @aspect.pointcut = (Pointcut_Builder.new.class_childs(Foo8).class_start_with("Fi").method_start_with("mois").build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture2)
-    @aspect.pointcut.should have(1).metodos
-    @aspect.pointcut.clases.should include(Fight8)
-    @aspect.pointcut.should have(1).clases
+    pointcut = (Pointcut_Builder.new.class_childs(Foo8).class_start_with("Fi").method_start_with("mois").build)
+    pointcut.metodos.map{|m| m.name}.should include(:moisture2)
+    pointcut.should have(1).metodos
+    pointcut.clases.should include(Fight8)
+    pointcut.should have(1).clases
   end
 
   it 'class hierarchy and method_arity point cut' do
-    @aspect.pointcut = (Pointcut_Builder.new.class_hierarchy(Fight8).method_arity(1).build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(:tomastee2,:other,:joe=,:lara=,:sol=)
-    @aspect.pointcut.should have(5).metodos
-    @aspect.pointcut.clases.should include(Fight8,Foo8)
-    @aspect.pointcut.should have(2).clases
+    pointcut = (Pointcut_Builder.new.class_hierarchy(Fight8).method_arity(1).build)
+    pointcut.metodos.map{|m| m.name}.should include(:tomastee2,:other,:joe=,:lara=,:sol=)
+    pointcut.should have(5).metodos
+    pointcut.clases.should include(Fight8,Foo8)
+    pointcut.should have(2).clases
   end
 
   it 'class hierarchy, method_arity and method accessors point cut' do
-    @aspect.pointcut = (Pointcut_Builder.new.class_hierarchy(Fight8).method_arity(1).method_accessor(false).build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(:tomastee2,:other)
-    @aspect.pointcut.should have(2).metodos
-    @aspect.pointcut.clases.should include(Fight8,Foo8)
-    @aspect.pointcut.should have(2).clases
+    pointcut = (Pointcut_Builder.new.class_hierarchy(Fight8).method_arity(1).method_accessor(false).build)
+    pointcut.metodos.map{|m| m.name}.should include(:tomastee2,:other)
+    pointcut.should have(2).metodos
+    pointcut.clases.should include(Fight8,Foo8)
+    pointcut.should have(2).clases
   end
 
   it 'class array, class regex and method accessor point cut' do
-    @aspect.pointcut = (Pointcut_Builder.new.class_array([Foo8,Bar8,Fight8]).class_regex(/[ai]/).method_accessor(false).build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture,:multiply,:tomastee,:moisture2,:tomastee2)
-    @aspect.pointcut.should have(5).metodos
-    @aspect.pointcut.clases.should include(Bar8,Fight8)
-    @aspect.pointcut.should have(2).clases
+    pointcut = (Pointcut_Builder.new.class_array([Foo8,Bar8,Fight8]).class_regex(/[ai]/).method_accessor(false).build)
+    pointcut.metodos.map{|m| m.name}.should include(:moisture,:multiply,:tomastee,:moisture2,:tomastee2)
+    pointcut.should have(5).metodos
+    pointcut.clases.should include(Bar8,Fight8)
+    pointcut.should have(2).clases
   end
 
   it 'class array, class regex, method accessor and method array point cut' do
-    @aspect.pointcut = (Pointcut_Builder.new.class_array([Foo8,Bar8,Fight8]).class_regex(/[ai]/).method_accessor(false).method_array([:moisture,:moisture2]).build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture,:moisture2)
-    @aspect.pointcut.should have(2).metodos
-    @aspect.pointcut.clases.should include(Bar8,Fight8)
-    @aspect.pointcut.should have(2).clases
+    pointcut = (Pointcut_Builder.new.class_array([Foo8,Bar8,Fight8]).class_regex(/[ai]/).method_accessor(false).method_array([:moisture,:moisture2]).build)
+    pointcut.metodos.map{|m| m.name}.should include(:moisture,:moisture2)
+    pointcut.should have(2).metodos
+    pointcut.clases.should include(Bar8,Fight8)
+    pointcut.should have(2).clases
   end
 
   it 'class array and method regex point cut' do
-    @aspect.pointcut = (Pointcut_Builder.new.class_array([Bar8,Fight8]).method_regex(/ist...2/).build)
-    @aspect.pointcut.metodos.map{|m| m.name}.should include(:moisture2)
-    @aspect.pointcut.should have(1).metodos
-    @aspect.pointcut.clases.should include(Bar8,Fight8)
-    @aspect.pointcut.should have(2).clases
+    pointcut = (Pointcut_Builder.new.class_array([Bar8,Fight8]).method_regex(/ist...2/).build)
+    pointcut.metodos.map{|m| m.name}.should include(:moisture2)
+    pointcut.should have(1).metodos
+    pointcut.clases.should include(Bar8,Fight8)
+    pointcut.should have(2).clases
   end
 
   #it '' do
-  #  @aspect.pointcut=(Pointcut_Builder.new..build)
-  #  @aspect.pointcut.metodos.map{|m| m.name}.should include()
-  #  @aspect.pointcut.should have().metodos
-  #  @aspect.pointcut.clases.should include()
-  #  @aspect.pointcut.should have().clases
+  #  pointcut=(Pointcut_Builder.new..build)
+  #  pointcut.metodos.map{|m| m.name}.should include()
+  #  pointcut.should have().metodos
+  #  pointcut.clases.should include()
+  #  pointcut.should have().clases
   #end
 end

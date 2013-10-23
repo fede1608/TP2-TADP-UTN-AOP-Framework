@@ -54,4 +54,7 @@ class Pointcut
     pc_not
   end
 
+  alias_method :|, :or
+  alias_method :&, :and
+  #alias_method :!, :not
 end
