@@ -46,7 +46,10 @@ describe 'Transaction Aspect' do
 
     @foo=Foo6.new
   end
-
+  after do
+    Object.send :remove_const, :Foo6
+    Object.send :remove_const, :Bar6
+  end
   it 'should save on a different object' do
     @foo.otro=(8)
     @foo.instance_variable_get(:@otro).should be_nil

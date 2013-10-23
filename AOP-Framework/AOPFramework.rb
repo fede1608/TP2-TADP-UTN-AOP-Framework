@@ -1,6 +1,7 @@
 class Pointcut_Builder
   attr_reader :options
   def initialize
+    @seCumple=[lambda{|metodo| !metodo.name.to_s.start_with?('aopF_')}]
     @options = Hash.new
 
     @options[:class_array] = nil
@@ -36,22 +37,28 @@ class Pointcut_Builder
     p=Pointcut.new
     if !@options[:class_array].nil?
       p.clases = @options[:class_array]
+      @seCumple<<lambda{|metodo| @options[:class_array].include?(metodo.owner)}
     elsif !@options[:class_hierarchy].nil?
       p.clases = baseClass.select{|c| @options[:class_hierarchy].ancestors.include?(c)}
+      @seCumple<<lambda{|metodo| @options[:class_hierarchy].ancestors.include?(metodo.owner) && @seCumple.call(met)}
     elsif !@options[:class_childs].nil?
       p.clases = baseClass.select{|c| c.superclass == @options[:class_childs]}
+      @seCumple<<lambda{|metodo| metodo.owner.superclass == @options[:class_childs] }
     else
       p.clases= baseClass.clone
     end
 
     if !@options[:class_block].nil?
       p.clases.select!(&@options[:class_block])
+      @seCumple<<lambda{|metodo| @options[:class_block].call(metodo.owner) }
     end
     if !@options[:class_regex].nil?
       p.clases.select!{|a| a.name.to_s =~ @options[:class_regex]}
+      @seCumple<<lambda{|metodo| metodo.owner.name.to_s =~ @options[:class_regex] }
     end
     if !@options[:class_start_with].nil?
       p.clases.select!{|clase| clase.name.to_s.start_with?(@options[:class_start_with])}
+      @seCumple<<lambda{|metodo| metodo.owner.name.to_s.start_with?(@options[:class_start_with]) }
     end
     p.clases.each do |klass|
       p.metodos << klass.instance_methods(false).select{|m| !m.to_s.start_with?('aopF_')}.map{|met| klass.instance_method(met)}.select{|m| !m.name.to_s.start_with?('aopF_')}
@@ -59,262 +66,138 @@ class Pointcut_Builder
     p.metodos.flatten!
     if !@options[:method_array].nil?
       p.metodos.select!{|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
+      @seCumple<<lambda{|metodo| (@options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s)) }
     end
     if !@options[:method_accessor].nil?
-      p.metodos.select!{|m| m.owner.attr_readers.include?(m.name) || m.owner.attr_writers.include?(m.name) } if @options[:method_accessor]
-      p.metodos.select!{|m| !m.owner.attr_readers.include?(m.name) && !m.owner.attr_writers.include?(m.name) } unless @options[:method_accessor]
+
+      if @options[:method_accessor]
+         p.metodos.select!{|m| m.owner.attr_readers.include?(m.name) || m.owner.attr_writers.include?(m.name) } if @options[:method_accessor]
+         @seCumple<<lambda{|metodo| (metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )}
+      else
+         p.metodos.select!{|m| !m.owner.attr_readers.include?(m.name) && !m.owner.attr_writers.include?(m.name) } unless @options[:method_accessor]
+         @seCumple<<lambda{|metodo| !(metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )}
+      end
     end
     if !@options[:method_parameter_name].nil?
       p.metodos.select!{|m| m.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]}}
+      @seCumple<<lambda{|metodo| metodo.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]} }
     end
     if !@options[:method_parameters_type].nil?
       case @options[:method_parameters_type]
         when :opt,:req
           p.metodos.select!{|m| m.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s}}
+          @seCumple<<lambda{|metodo| metodo.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s} }
       #  when :req
       #    p.metodos.select!{|m| m.parameters.map(&:first).any?{|p| p==@options[:method_parameters_type]}&& m.arity!=0}
         when :req_all
           p.metodos.select!{|m| m.parameters.map(&:first).all?{|p| p.to_s== :req.to_s}}
+          @seCumple<<lambda{|metodo| metodo.parameters.map(&:first).all?{|p| p.to_s== :req.to_s} }
         when :opt_all
           p.metodos.select!{|m| m.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s}}
+          @seCumple<<lambda{|metodo| metodo.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s} }
       end
+
     end
     if !@options[:method_block].nil?
       p.metodos.select!(&@options[:method_block])
+      @seCumple<<lambda{|metodo| @options[:method_block].call(metodo) }
     end
     if !@options[:method_regex].nil?
       p.metodos.select!{|a| a.name.to_s =~ @options[:method_regex]}
+      @seCumple<<lambda{|metodo| metodo.name.to_s =~ @options[:method_regex] }
     end
     if !@options[:method_start_with].nil?
       p.metodos.select!{|m| m.name.to_s.start_with?(@options[:method_start_with])}
+      @seCumple<<lambda{|metodo| metodo.name.to_s.start_with?(@options[:method_start_with]) }
     end
     if !@options[:method_arity].nil?
       p.metodos.select!{|metodo| metodo.arity==@options[:method_arity] }
+      @seCumple<<lambda{|metodo| metodo.arity==@options[:method_arity] }
     end
     p.builder=(self.clone)
+    p.seCumple=lambda{|metodo| @seCumple.all?{|condicion| condicion.call(metodo)}}
     p
   end
 
-  def seCumple?(metodo)
-    return false if metodo.name.to_s.start_with?('aopF_')
-
-    if !@options[:class_array].nil?
-      return false unless @options[:class_array].include?(metodo.owner)
-    elsif !@options[:class_hierarchy].nil?
-      return false unless @options[:class_hierarchy].ancestors.include?(metodo.owner)
-    elsif !@options[:class_childs].nil?
-      return false unless metodo.owner.superclass == @options[:class_childs]
-    end
-
-    if !@options[:class_block].nil?
-      return false unless @options[:class_block].call(metodo.owner)
-    end
-    if !@options[:class_regex].nil?
-      return false unless metodo.owner.name.to_s =~ @options[:class_regex]
-    end
-    if !@options[:class_start_with].nil?
-      return false unless metodo.owner.name.to_s.start_with?(@options[:class_start_with])
-    end
-
-    if !@options[:method_array].nil?
-      return false unless (@options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s))
-    end
-    if !@options[:method_accessor].nil?
-      if @options[:method_accessor]
-      return false unless (metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )
-      else
-      return false if (metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )
-      end
-    end
-    if !@options[:method_parameter_name].nil?
-       return false unless metodo.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]}
-    end
-    if !@options[:method_parameters_type].nil?
-      case @options[:method_parameters_type]
-        when :opt,:req
-          return false unless metodo.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s}
-        when :req_all
-          return false unless metodo.parameters.map(&:first).all?{|p| p.to_s== :req.to_s}
-        when :opt_all
-          return false unless metodo.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s}
-      end
-    end
-    if !@options[:method_block].nil?
-      return false unless @options[:method_block].call(metodo)
-    end
-    if !@options[:method_regex].nil?
-      return false unless metodo.name.to_s =~ @options[:method_regex]
-    end
-    if !@options[:method_start_with].nil?
-      return false unless metodo.name.to_s.start_with?(@options[:method_start_with])
-    end
-    if !@options[:method_arity].nil?
-       return false unless metodo.arity==@options[:method_arity]
-    end
-    return true
-  end
 
   def class_array (val)
-    @options[:class_array]=val
+    @options[__method__]=val
     self
   end
-  def class_hierarchy (val)
-    @options[:class_hierarchy]=val
-    self
-  end
-  def class_childs (val)
-    @options[:class_childs]=val
-    self
-  end
-  def class_block (val)
-    @options[:class_block]=val
-    self
-  end
-  def class_regex (val)
-    @options[:class_regex]=val
-    self
-  end
-  def class_start_with (val)
-    @options[:class_start_with]=val
-    self
-  end
-  def method_array (val)
-    @options[:method_array]=val
-    self
-  end
-  def method_accessor (val)
-    @options[:method_accessor]=val
-    self
-  end
-  def method_parameter_name (val)
-    @options[:method_parameter_name]=val
-    self
-  end
-  def method_parameters_type (val)
-    @options[:method_parameters_type]=val
-    self
-  end
-  def method_block (val)
-    @options[:method_block]=val
-    self
-  end
-  def method_regex (val)
-    @options[:method_regex]=val
-    self
-  end
-  def method_start_with (val)
-    @options[:method_start_with]=val
-    self
-  end
-  def method_arity (val)
-    @options[:method_arity]=val
-    self
-  end
-
-
+  alias_method :class_hierarchy, :class_array
+  alias_method :class_childs, :class_array
+  alias_method :class_block, :class_array
+  alias_method :class_regex, :class_array
+  alias_method :class_start_with, :class_array
+  alias_method :method_array, :class_array
+  alias_method :method_accessor, :class_array
+  alias_method :method_parameter_name, :class_array
+  alias_method :method_parameters_type, :class_array
+  alias_method :method_block, :class_array
+  alias_method :method_regex, :class_array
+  alias_method :method_start_with, :class_array
+  alias_method :method_arity, :class_array
 
 end
 
 class Pointcut
-  attr_accessor :clases,:metodos,:builder
-
+  attr_accessor :clases,:metodos,:builder,:seCumple
+  attr_accessor :pointcuts_1,:pointcuts_2
   def initialize
     @clases=[]
     @metodos=[]
     @builder=nil
+    @seCumple=nil
   end
 
   def seCumple?(metodo)
-    @builder.seCumple?(metodo)
+    @seCumple.call(metodo)
   end
 
   def and(otroPC)
-    pc_and=Pointcut_and.new
+    pc_and=Pointcut.new
     pc_and.clases=(@clases.select{|clase| otroPC.clases.include?(clase) })
     pc_and.metodos=(@metodos.select{|met| otroPC.metodos.map{|met| met.inspect}.include?(met.inspect)})
-    pc_and.pointcuts_and1=(self)
-    pc_and.pointcuts_and2=(otroPC)
+    pc_and.pointcuts_1=(self)
+    pc_and.pointcuts_2=(otroPC)
+    pc_and.seCumple=lambda{|metodo|  pc_and.pointcuts_1.seCumple?(metodo)  && pc_and.pointcuts_2.seCumple?(metodo)}
     pc_and
   end
 
+
   def or(otroPC)
-    pc_or=Pointcut_or.new
+    pc_or=Pointcut.new
     pc_or.clases=(@clases)
     (pc_or.clases << otroPC.clases).flatten!.uniq!
     pc_or.metodos=(@metodos)
     otroPC.metodos.each{|met| pc_or.metodos.push(met) if !pc_or.metodos.map{|met| met.inspect}.include?(met.inspect) && !met.name.to_s.start_with?('aopF_')}
-    pc_or.pointcuts_or1=(self)
-    pc_or.pointcuts_or2=(otroPC)
+    pc_or.pointcuts_1=(self)
+    pc_or.pointcuts_2=(otroPC)
+    pc_or.seCumple=lambda{|metodo|  pc_or.pointcuts_1.seCumple?(metodo)  || pc_or.pointcuts_2.seCumple?(metodo)}
     pc_or
   end
+  #def || other TODO:TIRA ERROR SINTACTICO
+  #  self.or(other)
+  #end
 
   def not
-    pc_not=Pointcut_not.new
-
-    metodos_obj = []
-    @clases.each  do |klass|
-      metodos_obj << klass.instance_methods(false).map{|met| klass.instance_method(met)}.select{|m| !m.name.to_s.start_with?('aopF_')}
-    end
-    pc_not.metodos=(metodos_obj.flatten.select{|met| !@metodos.map{|met| met.inspect}.include?(met.inspect)})
-
-    clases_aux = Object.subclasses.select{|clase| !@clases.include?(clase)}
+    pc_not=Pointcut.new
     metodos_cls = []
-    clases_aux.each  do |klass|
-          metodos_cls << klass.instance_methods(false).map{|met| klass.instance_method(met)}.select{|m| !m.name.to_s.start_with?('aopF_')}
+    Object.subclasses.each  do |klass|
+          metodos_cls << klass.instance_methods(false).map{|met| klass.instance_method(met)}.select{|metodo|  !(seCumple.call(metodo))}
     end
-    (pc_not.metodos << metodos_cls.flatten.compact).flatten!
-
+    pc_not.metodos = metodos_cls.flatten.compact
     pc_not.metodos.each do |metodo|
       pc_not.clases.push(metodo.owner)
     end
     pc_not.clases.uniq!
-    pc_not.pointcut_not=(self)
+    pc_not.pointcuts_1=(self)
+    pc_not.seCumple=(lambda{|metodo|  !self.seCumple?(metodo)})
     pc_not
   end
 
 end
 
-class Pointcut_and < Pointcut
-  attr_accessor :pointcuts_and1,:pointcuts_and2
-
-  def initialize
-    super
-    @pointcuts_and1=nil
-    @pointcuts_and2=nil
-  end
-
-  def seCumple?(metodo)
-    @pointcuts_and1.seCumple?(metodo) && @pointcuts_and2.seCumple?(metodo)
-  end
-
-end
-
-class Pointcut_or < Pointcut
-  attr_accessor :pointcuts_or1,:pointcuts_or2
-
-  def initialize
-    super
-    @pointcuts_or1=nil
-    @pointcuts_or2=nil
-  end
-
-  def seCumple?(metodo)
-    @pointcuts_or1.seCumple?(metodo) || @pointcuts_or2.seCumple?(metodo)
-  end
-end
-
-class Pointcut_not < Pointcut
-  attr_accessor :pointcut_not
-
-  def initialize
-    super
-    @pointcut_not=nil
-  end
-
-  def seCumple?(metodo)
-    !@pointcut_not.seCumple?(metodo)
-  end
-end
 
 module Aspect_examples
 
@@ -443,6 +326,8 @@ class Object
 
   def self.inherited(subclass)
     @@subclasses << subclass
+    @@subclasses.uniq!
+    @@subclasses
   end
   def self.subclasses
     @@subclasses

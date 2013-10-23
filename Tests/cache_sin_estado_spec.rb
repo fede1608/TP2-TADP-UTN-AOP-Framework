@@ -52,6 +52,9 @@ describe 'Cache Sin Estado' do
     @a=Foo4.new
 
   end
+  after do
+    Object.send :remove_const, :Foo4
+  end
 
 
   it 'should cachear metodos con 0 parametros sin importar el estado' do

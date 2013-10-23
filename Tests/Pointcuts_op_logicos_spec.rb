@@ -3,7 +3,7 @@ require 'rspec'
 describe 'Operar logicamente con PointCuts' do
   before :each do
     require_relative '../AOP-Framework/AOPFramework'
-
+    Object.subclasses.clear
     class Foo7
       attr_accessor :joe,:lara
 
@@ -42,6 +42,11 @@ describe 'Operar logicamente con PointCuts' do
 
     @aspect=Aspect.new
   end
+  after do
+    Object.send :remove_const, :Foo7
+    Object.send :remove_const, :Bar7
+    Object.send :remove_const, :NotFoo7
+  end
 
   it 'should OR 2 pointcuts' do
     pc1=(Pointcut_Builder.new.class_array([Foo7,Bar7]).method_accessor(true).build)
@@ -70,9 +75,9 @@ describe 'Operar logicamente con PointCuts' do
 
   it 'should Negate(NOT) a pointcut' do
     pc1=(Pointcut_Builder.new.class_array([Foo7,Bar7]).method_accessor(true).build)
-    pc1.metodos.map{|m| m.name}.should include(:joe,:lara,:mar,:joe=,:lara=,:mar=)
-    pc1.should have(6).metodos
-    @aspect.pointcut =(pc1.not)
+    #pc1.metodos.map{|m| m.name}.should include(:joe,:lara,:mar,:joe=,:lara=,:mar=)
+    #pc1.should have(6).metodos
+    @aspect.pointcut=(pc1.not)
     @aspect.pointcut.metodos.map{|m| m.name}.should include(:tomastee,:other,:not_true,:not_false,:not_a_Foo_method,:another,:moisture,:multiply)
     @aspect.pointcut.metodos.map{|m| m.name}.should_not include(:joe,:lara,:mar,:joe=,:lara=,:mar=)
   end

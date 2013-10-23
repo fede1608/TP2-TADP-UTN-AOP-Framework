@@ -67,6 +67,9 @@ describe 'Cache con Estado' do
     @a=Foo5.new
 
   end
+  after do
+    Object.send :remove_const, :Foo5
+  end
 
   it 'should cachear metodos con 0 parametros' do
     @a.otro =(5)

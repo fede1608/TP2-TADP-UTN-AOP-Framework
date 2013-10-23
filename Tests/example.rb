@@ -32,6 +32,9 @@ class Hola
   def hello(world=1,bye=0)
     #example parameter name
   end
+  def sth
+    p __method__
+  end
 end
 class Chau < Hola
 end
@@ -47,6 +50,12 @@ p a.method(:hello).parameters.map(&:last).map(&:to_s)
 p a.method(:hello).parameters.map(&:first)
 p a.method(:hello).parameters
 
+#example parameter type
+aspecto4=Aspect.new
+aspecto4.pointcut =(Pointcut_Builder.new.class_array([Foo,Bar,Chau,Hola]).method_parameters_type(:opt_all).build)
+p aspecto4.pointcut.clases
+p aspecto4.pointcut.metodos
+
 #example parameter name
 aspecto3=Aspect.new
 aspecto3.pointcut =(Pointcut_Builder.new.method_parameter_name("world").build)
@@ -54,9 +63,4 @@ p aspecto3.pointcut.clases
 p aspecto3.pointcut.metodos
 aspecto3.benchmarking
 Hola.new.hello
-
-#example parameter type
-aspecto4=Aspect.new
-aspecto4.pointcut =(Pointcut_Builder.new.method_parameters_type(:opt_all).build)
-p aspecto4.pointcut.clases
-p aspecto4.pointcut.metodos
+Hola.new.sth

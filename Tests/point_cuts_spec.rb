@@ -93,6 +93,14 @@ describe 'Point Cuts' do
     # end
 
   end
+  after do
+    Object.send :remove_const, :Foo8
+    Object.send :remove_const, :Fight8
+    Object.send :remove_const, :Foo
+    Object.send :remove_const, :Bar
+    Object.send :remove_const, :Bar8
+    Object.send :remove_const, :NotFoo
+  end
 
   it 'class array point cut' do
     @aspect.pointcut=(Pointcut_Builder.new.class_array([NotFoo]).build)

@@ -37,6 +37,11 @@ describe 'Dynamic methods aspect' do
     @foo=Foo3.new
     @aspect.pointcut =(Pointcut_Builder.new.class_array([Foo3,Bar3,NotFoo3]).method_start_with("not").build)
   end
+  after do
+    Object.send :remove_const, :Foo3
+    Object.send :remove_const, :Bar3
+    Object.send :remove_const, :NotFoo3
+  end
 
   it 'should seCumple? metodo' do
     @aspect.pointcut.seCumple?(@foo.method(:not_true)).should == true

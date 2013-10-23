@@ -31,6 +31,10 @@ describe 'Basic Aspects' do
     @bar=Bar2.new
 
   end
+  after do
+    Object.send :remove_const, :Foo2
+    Object.send :remove_const, :Bar2
+  end
 
   it 'should aspect before' do
     beforeAspect=Aspect.new
@@ -50,7 +54,7 @@ describe 'Basic Aspects' do
 
   it 'should aspect instead' do
     errorAspect=Aspect.new
-    errorAspect.pointcut =(Pointcut_Builder.new.class_array([Foo2,Bar2]).build)
+    errorAspect.pointcut =(Pointcut_Builder.new.class_array([Foo2,Bar2]).method_accessor(true).build)
     @foo.algo.should ==  4
     errorAspect.add_behaviour(:instead,lambda{|met,old_met,*args| 90})
     @foo.algo.should ==  90
