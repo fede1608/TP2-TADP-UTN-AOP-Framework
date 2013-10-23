@@ -32,91 +32,124 @@ class Pointcut_Builder
 
   end
 
-  def build
+
+  def crear_pointcut
+    @p=Pointcut.new
+  end
+
+  def crear_clases_base
     baseClass=Object.subclasses
-    p=Pointcut.new
+
     if !@options[:class_array].nil?
-      p.clases = @options[:class_array]
+      @p.clases = @options[:class_array]
       @seCumple<<lambda{|metodo| @options[:class_array].include?(metodo.owner)}
     elsif !@options[:class_hierarchy].nil?
-      p.clases = baseClass.select{|c| @options[:class_hierarchy].ancestors.include?(c)}
+      @p.clases = baseClass.select{|c| @options[:class_hierarchy].ancestors.include?(c)}
       @seCumple<<lambda{|metodo| @options[:class_hierarchy].ancestors.include?(metodo.owner)}
     elsif !@options[:class_childs].nil?
-      p.clases = baseClass.select{|c| c.superclass == @options[:class_childs]}
+      @p.clases = baseClass.select{|c| c.superclass == @options[:class_childs]}
       @seCumple<<lambda{|metodo| metodo.owner.superclass == @options[:class_childs] }
     else
-      p.clases= baseClass.clone
+      @p.clases= baseClass.clone
     end
+  end
 
+  def filtrar_clases
     if !@options[:class_block].nil?
-      p.clases.select!(&@options[:class_block])
+      @p.clases.select!(&@options[:class_block])
       @seCumple<<lambda{|metodo| @options[:class_block].call(metodo.owner) }
     end
     if !@options[:class_regex].nil?
-      p.clases.select!{|a| a.name.to_s =~ @options[:class_regex]}
+      @p.clases.select!{|a| a.name.to_s =~ @options[:class_regex]}
       @seCumple<<lambda{|metodo| metodo.owner.name.to_s =~ @options[:class_regex] }
     end
     if !@options[:class_start_with].nil?
-      p.clases.select!{|clase| clase.name.to_s.start_with?(@options[:class_start_with])}
+      @p.clases.select!{|clase| clase.name.to_s.start_with?(@options[:class_start_with])}
       @seCumple<<lambda{|metodo| metodo.owner.name.to_s.start_with?(@options[:class_start_with]) }
     end
-    p.clases.each do |klass|
-      p.metodos << klass.instance_methods(false).select{|m| !m.to_s.start_with?('aopF_')}.map{|met| klass.instance_method(met)}.select{|m| !m.name.to_s.start_with?('aopF_')}
+  end
+
+  def crear_metodos_base
+    @p.clases.each do |klass|
+      @p.metodos << klass.instance_methods(false).select{|m| !m.to_s.start_with?('aopF_')}.map{|met| klass.instance_method(met)}.select{|m| !m.name.to_s.start_with?('aopF_')}
     end
-    p.metodos.flatten!
+    @p.metodos.flatten!
+  end
+
+  def filtrar_metodos
     if !@options[:method_array].nil?
-      p.metodos.select!{|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
+      @p.metodos.select!{|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
       @seCumple<<lambda{|metodo| (@options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s)) }
     end
     if !@options[:method_accessor].nil?
 
       if @options[:method_accessor]
-        p.metodos.select!{|m| m.owner.attr_readers.include?(m.name) || m.owner.attr_writers.include?(m.name) } if @options[:method_accessor]
+        @p.metodos.select!{|m| m.owner.attr_readers.include?(m.name) || m.owner.attr_writers.include?(m.name) } if @options[:method_accessor]
         @seCumple<<lambda{|metodo| (metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )}
       else
-        p.metodos.select!{|m| !m.owner.attr_readers.include?(m.name) && !m.owner.attr_writers.include?(m.name) } unless @options[:method_accessor]
+        @p.metodos.select!{|m| !m.owner.attr_readers.include?(m.name) && !m.owner.attr_writers.include?(m.name) } unless @options[:method_accessor]
         @seCumple<<lambda{|metodo| !(metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )}
       end
     end
     if !@options[:method_parameter_name].nil?
-      p.metodos.select!{|m| m.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]}}
+      @p.metodos.select!{|m| m.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]}}
       @seCumple<<lambda{|metodo| metodo.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]} }
     end
     if !@options[:method_parameters_type].nil?
       case @options[:method_parameters_type]
         when :opt,:req
-          p.metodos.select!{|m| m.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s}}
+          @p.metodos.select!{|m| m.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s}}
           @seCumple<<lambda{|metodo| metodo.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s} }
         #  when :req
         #    p.metodos.select!{|m| m.parameters.map(&:first).any?{|p| p==@options[:method_parameters_type]}&& m.arity!=0}
         when :req_all
-          p.metodos.select!{|m| m.parameters.map(&:first).all?{|p| p.to_s== :req.to_s}}
+          @p.metodos.select!{|m| m.parameters.map(&:first).all?{|p| p.to_s== :req.to_s}}
           @seCumple<<lambda{|metodo| metodo.parameters.map(&:first).all?{|p| p.to_s== :req.to_s} }
         when :opt_all
-          p.metodos.select!{|m| m.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s}}
+          @p.metodos.select!{|m| m.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s}}
           @seCumple<<lambda{|metodo| metodo.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s} }
       end
 
     end
     if !@options[:method_block].nil?
-      p.metodos.select!(&@options[:method_block])
+      @p.metodos.select!(&@options[:method_block])
       @seCumple<<lambda{|metodo| @options[:method_block].call(metodo) }
     end
     if !@options[:method_regex].nil?
-      p.metodos.select!{|a| a.name.to_s =~ @options[:method_regex]}
+      @p.metodos.select!{|a| a.name.to_s =~ @options[:method_regex]}
       @seCumple<<lambda{|metodo| metodo.name.to_s =~ @options[:method_regex] }
     end
     if !@options[:method_start_with].nil?
-      p.metodos.select!{|m| m.name.to_s.start_with?(@options[:method_start_with])}
+      @p.metodos.select!{|m| m.name.to_s.start_with?(@options[:method_start_with])}
       @seCumple<<lambda{|metodo| metodo.name.to_s.start_with?(@options[:method_start_with]) }
     end
     if !@options[:method_arity].nil?
-      p.metodos.select!{|metodo| metodo.arity==@options[:method_arity] }
+      @p.metodos.select!{|metodo| metodo.arity==@options[:method_arity] }
       @seCumple<<lambda{|metodo| metodo.arity==@options[:method_arity] }
     end
-    p.builder=(self.clone)
-    p.seCumple=lambda{|metodo| @seCumple.all?{|condicion| condicion.call(metodo)}}
-    p
+  end
+
+  def build
+    crear_pointcut()
+    crear_clases_base()
+    filtrar_clases()
+    crear_metodos_base()
+    filtrar_metodos()
+    agregar_builder()
+    agregar_lambda_condiciones()
+    devolver_pointcut()
+  end
+
+  def devolver_pointcut
+    @p
+  end
+
+  def agregar_lambda_condiciones
+    @p.seCumple=lambda{|metodo| @seCumple.all?{|condicion| condicion.call(metodo)}}
+  end
+
+  def agregar_builder
+    @p.builder=(self.clone)
   end
 
 
