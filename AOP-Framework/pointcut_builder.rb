@@ -2,34 +2,99 @@ class Pointcut_Builder
   attr_reader :options
   def initialize
     @seCumple=[lambda{|metodo| !metodo.name.to_s.start_with?('aopF_')}]
-    @options = Hash.new
+    @filtro_de_clases=[proc{true}]
+    @filtro_de_metodos=[proc{true}]
+    @classes_base=Object.subclasses
+  end
 
-    @options[:class_array] = nil
-    @options[:class_hierarchy] = nil
-    @options[:class_childs] = nil
+  def class_array (val)
+    @classes_base=val
+    agregar_condicion lambda{|metodo| @classes_base.include?(metodo.owner)}
+    self
+  end
 
-    @options[:class_block] = nil
-    @options[:class_regex] = nil
-    @options[:class_start_with] = nil
+  def class_hierarchy (clase)
+    @classes_base = Object.subclasses.select{|c| clase.ancestors.include?(c)}
+    agregar_condicion lambda{|metodo| clase.ancestors.include?(metodo.owner)}
+    self
+  end
 
-    @options[:method_array] = nil
-    @options[:method_accessor] = nil
-    @options[:method_parameter_name] = nil
-    @options[:method_parameters_type] = nil
-    @options[:method_block] = nil
-    @options[:method_regex] = nil
-    @options[:method_start_with] = nil
-    @options[:method_arity] = nil
+  def class_childs(clase)
+    @classes_base = Object.subclasses.select{|c| c.superclass == clase}
+    agregar_condicion lambda{|metodo| metodo.owner.superclass == clase }
+    self
+  end
 
-    @options.each do |key,value| #crea los setters automaticamente segun las optiones inicializadas, se vuelven a definir mas adelante para que aparezcan en el IDE al programar
-      self.class.class_eval do
-        define_method key do |val|
-          @options[key]=val
-          self
-        end
-      end
+  def agregar_al_filtro_de_clases(condicion)
+    @filtro_de_clases << condicion
+    agregar_condicion condicion
+  end
+  def class_block(a_proc)
+    agregar_al_filtro_de_clases lambda { |clase| a_proc.call(clase) }
+    self
+  end
+
+  def class_regex(regex)
+    agregar_al_filtro_de_clases lambda { |clase| clase.name.to_s =~ regex }
+    self
+  end
+
+  def class_start_with(str)
+    agregar_al_filtro_de_clases lambda{|clase| clase.name.to_s.start_with?(str)}
+    self
+  end
+
+  def agregar_al_filtro_de_metodos(condicion)
+    @filtro_de_metodos << condicion
+    agregar_condicion condicion
+  end
+
+  def method_array(array)
+    agregar_al_filtro_de_metodos(lambda{|metodo| (array.include?(metodo.name) || array.map{|metodo| metodo.to_s}.include?(metodo.name.to_s)) })
+    self
+  end
+
+  def method_accessor(bool)
+    agregar_al_filtro_de_metodos lambda{|metodo| (metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )} if bool
+    agregar_al_filtro_de_metodos lambda{|metodo| !(metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )} unless bool
+    self
+  end
+
+  def method_parameter_name(name)
+    agregar_al_filtro_de_metodos lambda{|metodo| metodo.parameters.map(&:last).map(&:to_s).any?{|p| p==name || p.to_sym ==name} }
+    self
+  end
+
+  def method_parameters_type(type)
+    case type
+      when :opt,:req
+        agregar_al_filtro_de_metodos lambda{|metodo| metodo.parameters.map(&:first).any?{|p| p.to_s==type.to_s} }
+      when :req_all
+        agregar_al_filtro_de_metodos lambda{|metodo| metodo.parameters.map(&:first).all?{|p| p.to_s== :req.to_s} }
+      when :opt_all
+        agregar_al_filtro_de_metodos lambda{|metodo| metodo.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s} }
     end
+    self
+  end
 
+  def method_block(a_proc)
+    agregar_al_filtro_de_metodos lambda{|metodo| a_proc.call(metodo) }
+    self
+  end
+
+  def method_regex(regex)
+    agregar_al_filtro_de_metodos lambda{|metodo| metodo.name.to_s =~ regex}
+    self
+  end
+
+  def method_start_with(str)
+    agregar_al_filtro_de_metodos  lambda{|metodo| metodo.name.to_s.start_with?(str) }
+    self
+  end
+
+  def method_arity(arity)
+    agregar_al_filtro_de_metodos  lambda{|metodo| metodo.arity==arity }
+    self
   end
 
 
@@ -38,35 +103,11 @@ class Pointcut_Builder
   end
 
   def crear_clases_base
-    baseClass=Object.subclasses
-
-    if !@options[:class_array].nil?
-      @p.clases = @options[:class_array]
-      @seCumple<<lambda{|metodo| @options[:class_array].include?(metodo.owner)}
-    elsif !@options[:class_hierarchy].nil?
-      @p.clases = baseClass.select{|c| @options[:class_hierarchy].ancestors.include?(c)}
-      @seCumple<<lambda{|metodo| @options[:class_hierarchy].ancestors.include?(metodo.owner)}
-    elsif !@options[:class_childs].nil?
-      @p.clases = baseClass.select{|c| c.superclass == @options[:class_childs]}
-      @seCumple<<lambda{|metodo| metodo.owner.superclass == @options[:class_childs] }
-    else
-      @p.clases= baseClass.clone
-    end
+    @p.clases=@classes_base
   end
 
   def filtrar_clases
-    if !@options[:class_block].nil?
-      @p.clases.select!(&@options[:class_block])
-      @seCumple<<lambda{|metodo| @options[:class_block].call(metodo.owner) }
-    end
-    if !@options[:class_regex].nil?
-      @p.clases.select!{|a| a.name.to_s =~ @options[:class_regex]}
-      @seCumple<<lambda{|metodo| metodo.owner.name.to_s =~ @options[:class_regex] }
-    end
-    if !@options[:class_start_with].nil?
-      @p.clases.select!{|clase| clase.name.to_s.start_with?(@options[:class_start_with])}
-      @seCumple<<lambda{|metodo| metodo.owner.name.to_s.start_with?(@options[:class_start_with]) }
-    end
+    @p.clases.select!{|clase| @filtro_de_clases.all?{|cond| cond.call(clase)}}
   end
 
   def crear_metodos_base
@@ -98,48 +139,7 @@ class Pointcut_Builder
 
 
   def filtrar_metodos
-    @options.select{|key,value| !value.nil? && key.to_s.start_with?('method')}.each do |key,value|
-      case key
-        when :method_array
-          seleccionar_metodos_que_cumplan_con! {|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
-          agregar_condicion lambda{|metodo| (@options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s)) }
-        when :method_accessor
-          if @options[:method_accessor]
-            seleccionar_metodos_que_cumplan_con! {|m| m.owner.attr_readers.include?(m.name) || m.owner.attr_writers.include?(m.name) }
-            agregar_condicion lambda{|metodo| (metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )}
-          else
-            seleccionar_metodos_que_cumplan_con! {|m| !m.owner.attr_readers.include?(m.name) && !m.owner.attr_writers.include?(m.name) }
-            agregar_condicion lambda{|metodo| !(metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )}
-          end
-        when :method_parameter_name
-          seleccionar_metodos_que_cumplan_con! {|m| m.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]}}
-          agregar_condicion lambda{|metodo| metodo.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]} }
-        when :method_parameters_type
-          case @options[:method_parameters_type]
-            when :opt,:req
-              seleccionar_metodos_que_cumplan_con! {|m| m.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s}}
-              agregar_condicion lambda{|metodo| metodo.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s} }
-            when :req_all
-              seleccionar_metodos_que_cumplan_con! {|m| m.parameters.map(&:first).all?{|p| p.to_s== :req.to_s}}
-              agregar_condicion lambda{|metodo| metodo.parameters.map(&:first).all?{|p| p.to_s== :req.to_s} }
-            when :opt_all
-              seleccionar_metodos_que_cumplan_con! {|m| m.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s}}
-              agregar_condicion lambda{|metodo| metodo.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s} }
-          end
-        when :method_block
-          seleccionar_metodos_que_cumplan_con!(&@options[:method_block])
-          agregar_condicion lambda{|metodo| @options[:method_block].call(metodo) }
-        when :method_regex
-          seleccionar_metodos_que_cumplan_con! {|a| a.name.to_s =~ @options[:method_regex]}
-          agregar_condicion lambda{|metodo| metodo.name.to_s =~ @options[:method_regex] }
-        when :method_start_with
-          seleccionar_metodos_que_cumplan_con! {|m| m.name.to_s.start_with?(@options[:method_start_with])}
-          agregar_condicion lambda{|metodo| metodo.name.to_s.start_with?(@options[:method_start_with]) }
-        when :method_arity
-          seleccionar_metodos_que_cumplan_con! {|metodo| metodo.arity==@options[:method_arity] }
-          agregar_condicion lambda{|metodo| metodo.arity==@options[:method_arity] }
-      end
-    end
+    @p.metodos.select!{|metodo| @filtro_de_metodos.all?{|cond| cond.call(metodo)}}
   end
 
   def build
@@ -153,21 +153,5 @@ class Pointcut_Builder
     devolver_pointcut()
   end
 
-  def class_array (val)
-    @options[__method__]=val
-    self
-  end
-  alias_method :class_hierarchy, :class_array
-  alias_method :class_childs, :class_array
-  alias_method :class_block, :class_array
-  alias_method :class_regex, :class_array
-  alias_method :class_start_with, :class_array
-  alias_method :method_array, :class_array
-  alias_method :method_accessor, :class_array
-  alias_method :method_parameter_name, :class_array
-  alias_method :method_parameters_type, :class_array
-  alias_method :method_block, :class_array
-  alias_method :method_regex, :class_array
-  alias_method :method_start_with, :class_array
-  alias_method :method_arity, :class_array
+
 end
