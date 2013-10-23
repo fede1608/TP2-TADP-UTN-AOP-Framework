@@ -195,6 +195,12 @@ describe 'Point Cuts' do
     pointcut.should have(2).clases
   end
 
+  it 'method block pointcut' do
+    pointcut=(Pointcut_Builder.new.method_block(lambda {|metodo| metodo.owner==NotFoo}).build)
+    pointcut.metodos.map{|m| m.name}.should include(:not_a_Foo_method)
+    pointcut.should have(1).metodos
+  end
+
   #it '' do
   #  pointcut=(Pointcut_Builder.new..build)
   #  pointcut.metodos.map{|m| m.name}.should include()

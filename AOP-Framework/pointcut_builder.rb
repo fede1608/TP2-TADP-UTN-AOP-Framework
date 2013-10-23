@@ -76,56 +76,69 @@ class Pointcut_Builder
     @p.metodos.flatten!
   end
 
+  def devolver_pointcut
+    @p
+  end
+
+  def agregar_lambda_condiciones
+    @p.seCumple=lambda{|metodo| @seCumple.all?{|condicion| condicion.call(metodo)}}
+  end
+
+  def agregar_builder
+    @p.builder=(self.clone)
+  end
+
+  def agregar_condicion(cond)
+    @seCumple<<cond
+  end
+
+  def seleccionar_metodos_que_cumplan_con!(&bloque)
+    @p.metodos.select!(&bloque)
+  end
+
+
   def filtrar_metodos
-    if !@options[:method_array].nil?
-      @p.metodos.select!{|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
-      @seCumple<<lambda{|metodo| (@options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s)) }
-    end
-    if !@options[:method_accessor].nil?
-
-      if @options[:method_accessor]
-        @p.metodos.select!{|m| m.owner.attr_readers.include?(m.name) || m.owner.attr_writers.include?(m.name) } if @options[:method_accessor]
-        @seCumple<<lambda{|metodo| (metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )}
-      else
-        @p.metodos.select!{|m| !m.owner.attr_readers.include?(m.name) && !m.owner.attr_writers.include?(m.name) } unless @options[:method_accessor]
-        @seCumple<<lambda{|metodo| !(metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )}
+    @options.select{|key,value| !value.nil? && key.to_s.start_with?('method')}.each do |key,value|
+      case key
+        when :method_array
+          seleccionar_metodos_que_cumplan_con! {|metodo| @options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s) }
+          agregar_condicion lambda{|metodo| (@options[:method_array].include?(metodo.name) || @options[:method_array].map{|metodo| metodo.to_s}.include?(metodo.name.to_s)) }
+        when :method_accessor
+          if @options[:method_accessor]
+            seleccionar_metodos_que_cumplan_con! {|m| m.owner.attr_readers.include?(m.name) || m.owner.attr_writers.include?(m.name) }
+            agregar_condicion lambda{|metodo| (metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )}
+          else
+            seleccionar_metodos_que_cumplan_con! {|m| !m.owner.attr_readers.include?(m.name) && !m.owner.attr_writers.include?(m.name) }
+            agregar_condicion lambda{|metodo| !(metodo.owner.attr_readers.include?(metodo.name) || metodo.owner.attr_writers.include?(metodo.name) )}
+          end
+        when :method_parameter_name
+          seleccionar_metodos_que_cumplan_con! {|m| m.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]}}
+          agregar_condicion lambda{|metodo| metodo.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]} }
+        when :method_parameters_type
+          case @options[:method_parameters_type]
+            when :opt,:req
+              seleccionar_metodos_que_cumplan_con! {|m| m.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s}}
+              agregar_condicion lambda{|metodo| metodo.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s} }
+            when :req_all
+              seleccionar_metodos_que_cumplan_con! {|m| m.parameters.map(&:first).all?{|p| p.to_s== :req.to_s}}
+              agregar_condicion lambda{|metodo| metodo.parameters.map(&:first).all?{|p| p.to_s== :req.to_s} }
+            when :opt_all
+              seleccionar_metodos_que_cumplan_con! {|m| m.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s}}
+              agregar_condicion lambda{|metodo| metodo.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s} }
+          end
+        when :method_block
+          seleccionar_metodos_que_cumplan_con!(&@options[:method_block])
+          agregar_condicion lambda{|metodo| @options[:method_block].call(metodo) }
+        when :method_regex
+          seleccionar_metodos_que_cumplan_con! {|a| a.name.to_s =~ @options[:method_regex]}
+          agregar_condicion lambda{|metodo| metodo.name.to_s =~ @options[:method_regex] }
+        when :method_start_with
+          seleccionar_metodos_que_cumplan_con! {|m| m.name.to_s.start_with?(@options[:method_start_with])}
+          agregar_condicion lambda{|metodo| metodo.name.to_s.start_with?(@options[:method_start_with]) }
+        when :method_arity
+          seleccionar_metodos_que_cumplan_con! {|metodo| metodo.arity==@options[:method_arity] }
+          agregar_condicion lambda{|metodo| metodo.arity==@options[:method_arity] }
       end
-    end
-    if !@options[:method_parameter_name].nil?
-      @p.metodos.select!{|m| m.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]}}
-      @seCumple<<lambda{|metodo| metodo.parameters.map(&:last).map(&:to_s).any?{|p| p==@options[:method_parameter_name] || p.to_sym ==@options[:method_parameter_name]} }
-    end
-    if !@options[:method_parameters_type].nil?
-      case @options[:method_parameters_type]
-        when :opt,:req
-          @p.metodos.select!{|m| m.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s}}
-          @seCumple<<lambda{|metodo| metodo.parameters.map(&:first).any?{|p| p.to_s==@options[:method_parameters_type].to_s} }
-        #  when :req
-        #    p.metodos.select!{|m| m.parameters.map(&:first).any?{|p| p==@options[:method_parameters_type]}&& m.arity!=0}
-        when :req_all
-          @p.metodos.select!{|m| m.parameters.map(&:first).all?{|p| p.to_s== :req.to_s}}
-          @seCumple<<lambda{|metodo| metodo.parameters.map(&:first).all?{|p| p.to_s== :req.to_s} }
-        when :opt_all
-          @p.metodos.select!{|m| m.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s}}
-          @seCumple<<lambda{|metodo| metodo.parameters.map(&:first).all?{|p| p.to_s== :opt.to_s} }
-      end
-
-    end
-    if !@options[:method_block].nil?
-      @p.metodos.select!(&@options[:method_block])
-      @seCumple<<lambda{|metodo| @options[:method_block].call(metodo) }
-    end
-    if !@options[:method_regex].nil?
-      @p.metodos.select!{|a| a.name.to_s =~ @options[:method_regex]}
-      @seCumple<<lambda{|metodo| metodo.name.to_s =~ @options[:method_regex] }
-    end
-    if !@options[:method_start_with].nil?
-      @p.metodos.select!{|m| m.name.to_s.start_with?(@options[:method_start_with])}
-      @seCumple<<lambda{|metodo| metodo.name.to_s.start_with?(@options[:method_start_with]) }
-    end
-    if !@options[:method_arity].nil?
-      @p.metodos.select!{|metodo| metodo.arity==@options[:method_arity] }
-      @seCumple<<lambda{|metodo| metodo.arity==@options[:method_arity] }
     end
   end
 
@@ -139,19 +152,6 @@ class Pointcut_Builder
     agregar_lambda_condiciones()
     devolver_pointcut()
   end
-
-  def devolver_pointcut
-    @p
-  end
-
-  def agregar_lambda_condiciones
-    @p.seCumple=lambda{|metodo| @seCumple.all?{|condicion| condicion.call(metodo)}}
-  end
-
-  def agregar_builder
-    @p.builder=(self.clone)
-  end
-
 
   def class_array (val)
     @options[__method__]=val
@@ -170,5 +170,4 @@ class Pointcut_Builder
   alias_method :method_regex, :class_array
   alias_method :method_start_with, :class_array
   alias_method :method_arity, :class_array
-
 end
