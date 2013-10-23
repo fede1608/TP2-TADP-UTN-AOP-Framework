@@ -24,3 +24,6 @@ module Aspect_examples
   end
 
 end
+class Aspect
+  include Aspect_examples
+end

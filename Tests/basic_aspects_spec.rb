@@ -1,10 +1,13 @@
 require 'rspec'
 
+require_relative '../AOP-Framework/pointcut_builder'
+require_relative '../AOP-Framework/pointcut_core'
+require_relative '../AOP-Framework/aspect_core'
+require_relative '../AOP-Framework/object_class_custom'
 describe 'Basic Aspects' do
 
 
   before :each do
-    require_relative '../AOP-Framework/AOPFramework'
     class Foo2
       attr_accessor :algo,:otro
       def initialize
@@ -34,6 +37,7 @@ describe 'Basic Aspects' do
   after do
     Object.send :remove_const, :Foo2
     Object.send :remove_const, :Bar2
+    Object.subclasses.clear
   end
 
   it 'should aspect before' do

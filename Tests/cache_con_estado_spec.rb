@@ -1,8 +1,12 @@
 require 'rspec'
 
+require_relative '../AOP-Framework/pointcut_builder'
+require_relative '../AOP-Framework/pointcut_core'
+require_relative '../AOP-Framework/aspect_core'
+require_relative '../AOP-Framework/object_class_custom'
+
 describe 'Cache con Estado' do
   before :each do
-    require_relative '../AOP-Framework/AOPFramework'
     class Foo5
       attr_accessor :algo,:otro
 
@@ -69,6 +73,7 @@ describe 'Cache con Estado' do
   end
   after do
     Object.send :remove_const, :Foo5
+    Object.subclasses.clear
   end
 
   it 'should cachear metodos con 0 parametros' do

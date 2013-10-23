@@ -56,8 +56,8 @@ class Pointcut
 
   alias_method :|, :or
   alias_method :&, :and
-
   def !
     self.not
   end
+
 end

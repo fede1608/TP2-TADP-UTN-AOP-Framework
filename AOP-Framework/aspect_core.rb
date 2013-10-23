@@ -1,7 +1,6 @@
 class Aspect
   attr_accessor :builder, :pointcut ,:dyn_methods
 
-  include Aspect_examples
 
   def initialize
     @builder = Pointcut_Builder.new

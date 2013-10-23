@@ -1,8 +1,9 @@
 require 'rspec'
 
+require_relative '../AOP-Framework/AOPFramework'
+
 describe 'Transaction Aspect' do
   before :each do
-    require_relative '../AOP-Framework/AOPFramework'
     class Foo6
       attr_accessor :algo,:otro,:otromas
       def initialize
@@ -49,6 +50,7 @@ describe 'Transaction Aspect' do
   after do
     Object.send :remove_const, :Foo6
     Object.send :remove_const, :Bar6
+    Object.subclasses.clear
   end
   it 'should save on a different object' do
     @foo.otro=(8)

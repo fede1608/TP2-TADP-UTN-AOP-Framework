@@ -1,9 +1,13 @@
 require 'rspec'
 
+require_relative '../AOP-Framework/pointcut_builder'
+require_relative '../AOP-Framework/pointcut_core'
+require_relative '../AOP-Framework/aspect_core'
+require_relative '../AOP-Framework/object_class_custom'
+
 describe 'Cache Sin Estado' do
 
   before :each do
-    require_relative '../AOP-Framework/AOPFramework'
     class Foo4
       attr_accessor :algo,:otro
 
@@ -54,6 +58,7 @@ describe 'Cache Sin Estado' do
   end
   after do
     Object.send :remove_const, :Foo4
+    Object.subclasses.clear
   end
 
 

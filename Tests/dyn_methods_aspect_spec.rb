@@ -1,9 +1,12 @@
 require 'rspec'
 
+require_relative '../AOP-Framework/pointcut_builder'
+require_relative '../AOP-Framework/pointcut_core'
+require_relative '../AOP-Framework/aspect_core'
+require_relative '../AOP-Framework/object_class_custom'
+
 describe 'Dynamic methods aspect' do
   before :each do
-    require_relative '../AOP-Framework/AOPFramework'
-
     class Foo3
       attr_accessor :joe,:lara
 
@@ -41,6 +44,7 @@ describe 'Dynamic methods aspect' do
     Object.send :remove_const, :Foo3
     Object.send :remove_const, :Bar3
     Object.send :remove_const, :NotFoo3
+    Object.subclasses.clear
   end
 
   it 'should seCumple? metodo' do
