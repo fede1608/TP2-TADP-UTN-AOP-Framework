@@ -40,7 +40,7 @@ class Pointcut_Builder
       @seCumple<<lambda{|metodo| @options[:class_array].include?(metodo.owner)}
     elsif !@options[:class_hierarchy].nil?
       p.clases = baseClass.select{|c| @options[:class_hierarchy].ancestors.include?(c)}
-      @seCumple<<lambda{|metodo| @options[:class_hierarchy].ancestors.include?(metodo.owner) && @seCumple.call(met)}
+      @seCumple<<lambda{|metodo| @options[:class_hierarchy].ancestors.include?(metodo.owner)}
     elsif !@options[:class_childs].nil?
       p.clases = baseClass.select{|c| c.superclass == @options[:class_childs]}
       @seCumple<<lambda{|metodo| metodo.owner.superclass == @options[:class_childs] }
