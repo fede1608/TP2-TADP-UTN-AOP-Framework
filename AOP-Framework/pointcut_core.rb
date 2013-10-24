@@ -42,7 +42,7 @@ class Pointcut
     pc_not=Pointcut.new
     metodos_cls = []
     Object.subclasses.each  do |klass|
-      metodos_cls << klass.instance_methods(false).map{|met| klass.instance_method(met)}.select{|metodo|  !(seCumple.call(metodo))}
+      metodos_cls << klass.instance_methods(false).map{|met| klass.instance_method(met)}.select{|metodo|  !seCumple.call(metodo) && !metodo.name.to_s.start_with?('aopF_')}
     end
     pc_not.metodos = metodos_cls.flatten.compact
     pc_not.metodos.each do |metodo|

@@ -1,9 +1,9 @@
 class Pointcut_Builder
-  attr_reader :options
+
   def initialize
     @seCumple=[lambda{|metodo| !metodo.name.to_s.start_with?('aopF_')}]
     @filtro_de_clases=[proc{true}]
-    @filtro_de_metodos=[proc{true}]
+    @filtro_de_metodos=[lambda{|metodo| !metodo.name.to_s.start_with?('aopF_')}]
     @classes_base=Object.subclasses
   end
 
